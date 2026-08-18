@@ -4,16 +4,16 @@
 ========================================================= */
 
 const ANIMALS = [
-  { name: "Cat", emoji: "🐱", color: "#FFD166", article: "a" },
-  { name: "Dog", emoji: "🐶", color: "#F4A261", article: "a" },
- { name: "Elephant", image: "assets/animals/elephant.png", emoji: "🐘", color: "#BDE0FE", article: "an" },
-  { name: "Lion", emoji: "🦁", color: "#F6BD60", article: "a" },
-  { name: "Monkey", emoji: "🐵", color: "#C9ADA7", article: "a" },
-  { name: "Rabbit", emoji: "🐰", color: "#EADCF8", article: "a" },
-  { name: "Duck", emoji: "🦆", color: "#FFE066", article: "a" },
-  { name: "Cow", emoji: "🐮", color: "#F8F9FA", article: "a" },
-  { name: "Horse", emoji: "🐴", color: "#D4A373", article: "a" },
-  { name: "Zebra", emoji: "🦓", color: "#E9ECEF", article: "a" }
+  { name: "Cat", emoji: "🐱", image: "assets/animals/cat.png", color: "#FFD166", article: "a" },
+  { name: "Dog", emoji: "🐶", image: "assets/animals/dog.png", color: "#F4A261", article: "a" },
+  { name: "Elephant", emoji: "🐘", image: "assets/animals/elephant.png", color: "#BDE0FE", article: "an" },
+  { name: "Lion", emoji: "🦁", image: "assets/animals/lion.png", color: "#F6BD60", article: "a" },
+  { name: "Monkey", emoji: "🐵", image: "assets/animals/monkey.png", color: "#C9ADA7", article: "a" },
+  { name: "Rabbit", emoji: "🐰", image: "assets/animals/rabbit.png", color: "#EADCF8", article: "a" },
+  { name: "Duck", emoji: "🦆", image: "assets/animals/duck.png", color: "#FFE066", article: "a" },
+  { name: "Cow", emoji: "🐮", image: "assets/animals/cow.png", color: "#F8F9FA", article: "a" },
+  { name: "Horse", emoji: "🐴", image: "assets/animals/horse.png", color: "#D4A373", article: "a" },
+  { name: "Zebra", emoji: "🦓", image: "assets/animals/zebra.png", color: "#E9ECEF", article: "a" }
 ];
 
 let game;
@@ -354,34 +354,32 @@ function createQuestion() {
   const card = addUI(scene.add.rectangle(w / 2, cardY, Math.min(w * 0.50, 440), cardH, 0xFFFFFF)
     .setStrokeStyle(7, Phaser.Display.Color.HexStringToColor(currentAnimal.color).color));
 
- let animal;
+const animal = addUI(
+  scene.add.image(
+    w / 2,
+    cardY,
+    currentAnimal.name
+  )
+);
 
-if (currentAnimal.image) {
-  animal = addUI(
-    scene.add.image(w / 2, cardY, currentAnimal.name)
-      .setOrigin(0.5)
-  );
+const maxWidth = Math.min(w * 0.38, 330);
+const maxHeight = cardH * 0.82;
 
-  animal.setDisplaySize(
-    compact ? 150 : 190,
-    compact ? 150 : 190
-  );
-} else {
-  animal = addUI(
-    scene.add.text(w / 2, cardY, currentAnimal.emoji, {
-      fontSize: Math.min(w * 0.20, compact ? 125 : 165) + "px"
-    }).setOrigin(0.5)
-  );
-}
+const scale = Math.min(
+  maxWidth / animal.width,
+  maxHeight / animal.height
+);
 
-  scene.tweens.add({
-    targets: animal,
-    y: cardY - 7,
-    duration: 800,
-    yoyo: true,
-    repeat: -1,
-    ease: "Sine.easeInOut"
-  });
+animal.setScale(scale);
+
+scene.tweens.add({
+  targets: animal,
+  y: cardY - 7,
+  duration: 800,
+  yoyo: true,
+  repeat: -1,
+  ease: "Sine.easeInOut"
+});
 
   const options = createOptions(currentAnimal.name);
   const totalW = buttonW * 2 + gap;
