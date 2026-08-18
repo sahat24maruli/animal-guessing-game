@@ -6,7 +6,7 @@
 const ANIMALS = [
   { name: "Cat", emoji: "🐱", color: "#FFD166", article: "a" },
   { name: "Dog", emoji: "🐶", color: "#F4A261", article: "a" },
-  { name: "Elephant", emoji: "🐘", color: "#BDE0FE", article: "an" },
+ { name: "Elephant", image: "assets/elephant.png", emoji: "🐘", color: "#BDE0FE", article: "an" },
   { name: "Lion", emoji: "🦁", color: "#F6BD60", article: "a" },
   { name: "Monkey", emoji: "🐵", color: "#C9ADA7", article: "a" },
   { name: "Rabbit", emoji: "🐰", color: "#EADCF8", article: "a" },
@@ -58,7 +58,13 @@ window.addEventListener("resize", () => {
 
 game = new Phaser.Game(config);
 
-function preload() {}
+function preload() {
+  ANIMALS.forEach(animal => {
+    if (animal.image) {
+      this.load.image(animal.name, animal.image);
+    }
+  });
+}
 
 function create() {
   scene = this;
@@ -348,9 +354,25 @@ function createQuestion() {
   const card = addUI(scene.add.rectangle(w / 2, cardY, Math.min(w * 0.50, 440), cardH, 0xFFFFFF)
     .setStrokeStyle(7, Phaser.Display.Color.HexStringToColor(currentAnimal.color).color));
 
-  const animal = addUI(scene.add.text(w / 2, cardY, currentAnimal.emoji, {
-    fontSize: Math.min(w * 0.20, compact ? 125 : 165) + "px"
-  }).setOrigin(0.5));
+ let animal;
+
+if (currentAnimal.image) {
+  animal = addUI(
+    scene.add.image(w / 2, cardY, currentAnimal.name)
+      .setOrigin(0.5)
+  );
+
+  animal.setDisplaySize(
+    compact ? 150 : 190,
+    compact ? 150 : 190
+  );
+} else {
+  animal = addUI(
+    scene.add.text(w / 2, cardY, currentAnimal.emoji, {
+      fontSize: Math.min(w * 0.20, compact ? 125 : 165) + "px"
+    }).setOrigin(0.5)
+  );
+}
 
   scene.tweens.add({
     targets: animal,
