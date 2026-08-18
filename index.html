@@ -1,38 +1,18 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#58c957">
-<title>Animal Adventure 🐾</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#75d66b">
+  <meta name="description" content="Animal Picture Guessing Game - an interactive English learning game for children ages 4-8">
+  <title>Animal Adventure - Guess the Animal</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="game">
-<header><b>🐾 Animal Adventure</b><span>⭐ <strong id="score">0</strong></span></header>
-<main>
-<div class="progress"><span>Round <b id="round">1</b> / 10</span><button id="mute">🔊</button></div>
-<section class="card">
-<div id="art" class="art"></div>
-<button id="hear" class="hear">🔊 Hear the animal</button>
-<p>Listen and choose the correct word!</p>
-</section>
-<div id="answers" class="answers"></div>
-<div id="feedback" class="feedback"></div>
-</main>
-</div>
+  <main id="game-container" aria-label="Animal Picture Guessing Game"></main>
 
-<div id="start" class="overlay"><div class="modal">
-<div class="big">🐯</div><h1>Animal Adventure</h1>
-<p>Guess the animal and learn English!</p>
-<button id="startBtn" class="primary">▶ Start Game</button>
-<small>🔊 Sound is part of the game</small>
-</div></div>
-
-<div id="done" class="overlay hidden"><div class="modal">
-<div id="stars" class="stars">⭐⭐⭐</div><h1>🎉 Great Job!</h1>
-<p id="message"></p><div class="final">Score: <b id="finalScore">0</b></div>
-<button id="again" class="primary">🔄 Play Again</button>
-</div></div>
-<script src="js/game.js"></script>
-</body></html>
+  <!-- Phaser is loaded from a public CDN. The game itself is hosted by your website. -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
