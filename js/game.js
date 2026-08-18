@@ -6,7 +6,7 @@
 const ANIMALS = [
   { name: "Cat", emoji: "🐱", color: "#FFD166", article: "a" },
   { name: "Dog", emoji: "🐶", color: "#F4A261", article: "a" },
- { name: "Elephant", image: "assets/elephant.png", emoji: "🐘", color: "#BDE0FE", article: "an" },
+ { name: "Elephant", image: "assets/animals/elephant.png", emoji: "🐘", color: "#BDE0FE", article: "an" },
   { name: "Lion", emoji: "🦁", color: "#F6BD60", article: "a" },
   { name: "Monkey", emoji: "🐵", color: "#C9ADA7", article: "a" },
   { name: "Rabbit", emoji: "🐰", color: "#EADCF8", article: "a" },
