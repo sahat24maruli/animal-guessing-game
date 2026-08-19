@@ -788,77 +788,19 @@ body {
 }
 
 
-.elephant-body {
+.elephant-image {
 
-  position: relative;
+  display: block;
 
-  width: 150px;
-  height: 135px;
+  width: 180px;
+  height: auto;
 
-  border-radius: 55% 55% 45% 45%;
+  object-fit: contain;
 
-  background: #9faec0;
+  user-select: none;
+  -webkit-user-drag: none;
 
-  box-shadow:
-    inset -12px -12px 0 rgba(0, 0, 0, 0.08);
-
-}
-
-
-.elephant-ear {
-
-  position: absolute;
-
-  width: 75px;
-  height: 95px;
-
-  left: -35px;
-  top: 5px;
-
-  border-radius: 50%;
-
-  background: #8f9eaf;
-
-  transform: rotate(-15deg);
-
-}
-
-
-.elephant-eye {
-
-  position: absolute;
-
-  width: 9px;
-  height: 11px;
-
-  right: 38px;
-  top: 43px;
-
-  border-radius: 50%;
-
-  background: #263544;
-
-}
-
-
-.elephant-trunk {
-
-  position: absolute;
-
-  width: 42px;
-  height: 85px;
-
-  right: -15px;
-  top: 53px;
-
-  border-radius:
-    0 0 25px 25px;
-
-  border-right:
-    18px solid #9faec0;
-
-  transform:
-    rotate(-8deg);
+  pointer-events: none;
 
 }
 
