@@ -18,43 +18,269 @@
 
   <main class="home-screen">
 
-    <div class="home-stage">
+    <!-- =========================================
+         SKY
+    ========================================== -->
 
-      <!-- THE ACTUAL DESIGN -->
-      <img
-        src="assets/ui/home-screen.png"
-        class="home-image"
-        alt="Kids Learning World"
-      >
+    <div class="sky">
 
-      <!-- =========================
-           INVISIBLE CLICK AREAS
-      ========================== -->
+      <div class="sun"></div>
 
-      <!-- Sound -->
-      <button
-        id="soundButton"
-        class="hotspot sound-hotspot"
-        aria-label="Sound"
-      ></button>
+      <div class="cloud cloud-1">
+        <span></span>
+      </div>
 
-      <!-- Exit -->
-      <button
-        id="exitButton"
-        class="hotspot exit-hotspot"
-        aria-label="Exit"
-      ></button>
+      <div class="cloud cloud-2">
+        <span></span>
+      </div>
 
-      <!-- Animal Adventure -->
-      <button
-        id="animalAdventureButton"
-        class="hotspot animal-hotspot"
-        aria-label="Animal Adventure"
-      ></button>
+      <div class="cloud cloud-3">
+        <span></span>
+      </div>
 
     </div>
 
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="game-header">
+
+      <div class="logo">
+
+        <div class="logo-kids">
+          KIDS
+        </div>
+
+        <div class="logo-learning">
+          LEARNING
+        </div>
+
+        <div class="logo-world">
+          WORLD
+        </div>
+
+      </div>
+
+      <div class="logo-subtitle">
+        Learn • Play • Explore
+      </div>
+
+    </header>
+
+
+    <!-- =========================================
+         TOP CONTROLS
+    ========================================== -->
+
+    <div class="top-controls">
+
+      <button
+        id="soundButton"
+        class="control-button"
+        type="button"
+        aria-label="Sound"
+      >
+        <span class="control-icon">🔊</span>
+      </button>
+
+      <button
+        id="exitButton"
+        class="control-button"
+        type="button"
+        aria-label="Exit"
+      >
+        <span class="control-icon">🚪</span>
+      </button>
+
+    </div>
+
+
+    <!-- =========================================
+         MAIN WORLD
+    ========================================== -->
+
+    <section class="world">
+
+
+      <!-- =====================================
+           DISTANT HILLS
+      ====================================== -->
+
+      <div class="hill hill-back"></div>
+
+      <div class="hill hill-middle"></div>
+
+      <div class="hill hill-front"></div>
+
+
+      <!-- =====================================
+           TREES
+      ====================================== -->
+
+      <div class="tree tree-left">
+
+        <div class="tree-crown">
+
+          <div class="leaf leaf-1"></div>
+          <div class="leaf leaf-2"></div>
+          <div class="leaf leaf-3"></div>
+          <div class="leaf leaf-4"></div>
+
+        </div>
+
+        <div class="tree-trunk"></div>
+
+      </div>
+
+
+      <div class="tree tree-right">
+
+        <div class="tree-crown">
+
+          <div class="leaf leaf-1"></div>
+          <div class="leaf leaf-2"></div>
+          <div class="leaf leaf-3"></div>
+          <div class="leaf leaf-4"></div>
+
+        </div>
+
+        <div class="tree-trunk"></div>
+
+      </div>
+
+
+      <!-- =====================================
+           LEFT ANIMAL
+      ====================================== -->
+
+      <div class="world-animal animal-lion">
+
+        <div class="animal-body">
+
+          <div class="lion-face">
+
+            <div class="lion-ear ear-left"></div>
+            <div class="lion-ear ear-right"></div>
+
+            <div class="lion-eye eye-left"></div>
+            <div class="lion-eye eye-right"></div>
+
+            <div class="lion-nose"></div>
+
+            <div class="lion-mouth"></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           RIGHT ANIMAL
+      ====================================== -->
+
+      <div class="world-animal animal-elephant">
+
+        <div class="elephant-body">
+
+          <div class="elephant-ear"></div>
+
+          <div class="elephant-eye"></div>
+
+          <div class="elephant-trunk"></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================
+           MAIN MENU
+      ====================================== -->
+
+      <div class="main-menu">
+
+        <div class="welcome-text">
+          LET'S EXPLORE!
+        </div>
+
+        <button
+          id="animalAdventureButton"
+          class="adventure-button"
+          type="button"
+          aria-label="Animal Adventure"
+        >
+
+          <span class="adventure-icon">
+            🦁
+          </span>
+
+          <span class="adventure-content">
+
+            <span class="adventure-title">
+              ANIMAL
+            </span>
+
+            <span class="adventure-subtitle">
+              ADVENTURE
+            </span>
+
+          </span>
+
+          <span class="adventure-arrow">
+            ▶
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <!-- =====================================
+           FLOWERS
+      ====================================== -->
+
+      <div class="flower flower-1">🌼</div>
+      <div class="flower flower-2">🌸</div>
+      <div class="flower flower-3">🌻</div>
+      <div class="flower flower-4">🌸</div>
+      <div class="flower flower-5">🌼</div>
+
+
+      <!-- =====================================
+           GROUND
+      ====================================== -->
+
+      <div class="ground">
+
+        <div class="grass grass-1"></div>
+        <div class="grass grass-2"></div>
+        <div class="grass grass-3"></div>
+        <div class="grass grass-4"></div>
+        <div class="grass grass-5"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="game-footer">
+
+      <span>
+        🌎 A fun world for curious kids
+      </span>
+
+    </footer>
+
   </main>
+
 
   <script src="js/home.js"></script>
 
