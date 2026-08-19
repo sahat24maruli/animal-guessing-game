@@ -1,18 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#75d66b">
-  <meta name="description" content="Animal Picture Guessing Game - an interactive English learning game for children ages 4-8">
-  <title>Animal Adventure - Guess the Animal</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <main id="game-container" aria-label="Animal Picture Guessing Game"></main>
 
-  <!-- Phaser is loaded from a public CDN. The game itself is hosted by your website. -->
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
-  <script src="js/game.js"></script>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  >
+
+  <title>Kids Learning World</title>
+
+  <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+  <main class="home-screen">
+
+    <div class="home-stage">
+
+      <!-- THE ACTUAL DESIGN -->
+      <img
+        src="assets/ui/home-screen.png"
+        class="home-image"
+        alt="Kids Learning World"
+      >
+
+      <!-- =========================
+           INVISIBLE CLICK AREAS
+      ========================== -->
+
+      <!-- Sound -->
+      <button
+        id="soundButton"
+        class="hotspot sound-hotspot"
+        aria-label="Sound"
+      ></button>
+
+      <!-- Exit -->
+      <button
+        id="exitButton"
+        class="hotspot exit-hotspot"
+        aria-label="Exit"
+      ></button>
+
+      <!-- Animal Adventure -->
+      <button
+        id="animalAdventureButton"
+        class="hotspot animal-hotspot"
+        aria-label="Animal Adventure"
+      ></button>
+
+    </div>
+
+  </main>
+
+  <script src="js/home.js"></script>
+
 </body>
+
 </html>
