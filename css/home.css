@@ -1,167 +1,1557 @@
+/* =========================================================
+   KIDS LEARNING WORLD
+   HOME SCREEN
+   HTML + CSS VERSION
+========================================================= */
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+
 html,
 body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
+
 
 body {
-  background: #75d66b;
   font-family:
-    "Arial Rounded MT Bold",
-    "Trebuchet MS",
     Arial,
+    Helvetica,
     sans-serif;
-}
-
-/* =====================================
-   HOME SCREEN
-===================================== */
-
-.home-screen {
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   overflow: hidden;
 }
 
-/* =====================================
-   DESIGN STAGE
-===================================== */
 
-.home-stage {
+/* =========================================================
+   HOME SCREEN
+========================================================= */
+
+.home-screen {
+
   position: relative;
 
-  width: 100vw;
+  width: 100%;
   height: 100vh;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 600px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #69d5ff 0%,
+      #9be6ff 45%,
+      #d9f7ff 70%,
+      #a8df72 70%,
+      #6fc450 100%
+    );
+
 }
 
-/* =====================================
-   ACTUAL DESIGN IMAGE
-===================================== */
 
-.home-image {
+/* =========================================================
+   SKY
+========================================================= */
+
+.sky {
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+}
+
+
+/* =========================================================
+   SUN
+========================================================= */
+
+.sun {
+
+  position: absolute;
+
+  width: 115px;
+  height: 115px;
+
+  top: 55px;
+  right: 8%;
+
+  border-radius: 50%;
+
+  background: #ffd84d;
+
+  box-shadow:
+    0 0 0 14px rgba(255, 216, 77, 0.18),
+    0 0 45px rgba(255, 216, 77, 0.45);
+
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+.cloud {
+
+  position: absolute;
+
+  width: 150px;
+  height: 48px;
+
+  border-radius: 50px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  animation:
+    cloudFloat 20s ease-in-out infinite;
+
+}
+
+
+.cloud::before,
+.cloud::after,
+.cloud span {
+
+  content: "";
+
+  position: absolute;
+
   display: block;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+}
+
+
+.cloud::before {
+
+  width: 65px;
+  height: 65px;
+
+  left: 22px;
+  bottom: 2px;
+
+}
+
+
+.cloud::after {
+
+  width: 78px;
+  height: 78px;
+
+  right: 20px;
+  bottom: 0;
+
+}
+
+
+.cloud span {
+
+  width: 50px;
+  height: 50px;
+
+  left: 62px;
+  bottom: 15px;
+
+}
+
+
+.cloud-1 {
+
+  top: 100px;
+  left: 4%;
+
+}
+
+
+.cloud-2 {
+
+  top: 175px;
+  left: 48%;
+
+  transform: scale(0.75);
+
+  animation-duration: 27s;
+
+}
+
+
+.cloud-3 {
+
+  top: 80px;
+  left: 78%;
+
+  transform: scale(0.55);
+
+  animation-duration: 24s;
+
+}
+
+
+@keyframes cloudFloat {
+
+  0%,
+  100% {
+
+    transform:
+      translateX(-25px);
+
+  }
+
+  50% {
+
+    transform:
+      translateX(45px);
+
+  }
+
+}
+
+
+/* =========================================================
+   HEADER / LOGO
+========================================================= */
+
+.game-header {
+
+  position: absolute;
+
+  top: 5%;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 50;
+
+  text-align: center;
+
+  user-select: none;
+
+}
+
+
+.logo {
+
+  line-height: 0.9;
+
+  filter:
+    drop-shadow(
+      0 7px 0 rgba(0, 0, 0, 0.10)
+    );
+
+}
+
+
+.logo-kids {
+
+  font-size:
+    clamp(48px, 7vw, 86px);
+
+  font-weight: 1000;
+
+  letter-spacing: 5px;
+
+  color: #ff6262;
+
+}
+
+
+.logo-learning {
+
+  margin-top: 4px;
+
+  font-size:
+    clamp(28px, 4vw, 48px);
+
+  font-weight: 1000;
+
+  letter-spacing: 7px;
+
+  color: #ffd447;
+
+}
+
+
+.logo-world {
+
+  margin-top: 4px;
+
+  font-size:
+    clamp(36px, 5vw, 62px);
+
+  font-weight: 1000;
+
+  letter-spacing: 6px;
+
+  color: #4298e8;
+
+}
+
+
+.logo-subtitle {
+
+  margin-top: 15px;
+
+  padding: 8px 18px;
+
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  color: #39749a;
+
+  font-size:
+    clamp(11px, 1.3vw, 16px);
+
+  font-weight: 800;
+
+  letter-spacing: 2px;
+
+}
+
+
+/* =========================================================
+   TOP CONTROLS
+========================================================= */
+
+.top-controls {
+
+  position: absolute;
+
+  top: 25px;
+  left: 25px;
+
+  display: flex;
+
+  gap: 12px;
+
+  z-index: 100;
+
+}
+
+
+.control-button {
+
+  width: 58px;
+  height: 58px;
+
+  border: 4px solid rgba(255, 255, 255, 0.85);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.16);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+}
+
+
+.control-icon {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 
   width: 100%;
   height: 100%;
 
-  object-fit: contain;
+  font-size: 27px;
 
-  user-select: none;
-  -webkit-user-drag: none;
-
-  pointer-events: none;
 }
 
-/* =====================================
-   INVISIBLE CLICK AREAS
-===================================== */
 
-.hotspot {
+.control-button:hover {
+
+  transform: scale(1.12);
+
+  box-shadow:
+    0 8px 17px rgba(0, 0, 0, 0.20);
+
+}
+
+
+.control-button:active {
+
+  transform: scale(0.94);
+
+}
+
+
+/* =========================================================
+   WORLD
+========================================================= */
+
+.world {
+
   position: absolute;
 
-  border: none;
-  background: transparent;
-
-  padding: 0;
-  margin: 0;
-
-  cursor: pointer;
+  inset: 0;
 
   z-index: 10;
 
-  outline: none;
 }
 
-/*
-  IMPORTANT:
-  These areas are transparent.
-  They don't change the visual design.
-*/
 
-/* -------------------------
-   SOUND
-------------------------- */
+/* =========================================================
+   HILLS
+========================================================= */
 
-.sound-hotspot {
-  left: 3%;
-  top: 3%;
+.hill {
 
-  width: 10%;
-  height: 14%;
+  position: absolute;
+
+  border-radius: 50% 50% 0 0;
+
 }
 
-/* -------------------------
-   EXIT
-------------------------- */
 
-.exit-hotspot {
-  right: 3%;
-  top: 3%;
+.hill-back {
 
-  width: 10%;
-  height: 14%;
+  width: 80%;
+  height: 30%;
+
+  left: -10%;
+  bottom: 20%;
+
+  background: #9bdc76;
+
 }
 
-/* -------------------------
-   ANIMAL ADVENTURE
-------------------------- */
 
-.animal-hotspot {
-  left: 8%;
-  top: 42%;
+.hill-middle {
 
-  width: 19%;
-  height: 42%;
+  width: 70%;
+  height: 27%;
+
+  right: -15%;
+  bottom: 20%;
+
+  background: #8bd36b;
+
 }
 
-/* =====================================
+
+.hill-front {
+
+  width: 80%;
+  height: 25%;
+
+  left: 15%;
+  bottom: 18%;
+
+  background: #7dcc5d;
+
+}
+
+
+/* =========================================================
+   TREES
+========================================================= */
+
+.tree {
+
+  position: absolute;
+
+  bottom: 17%;
+
+  width: 150px;
+  height: 240px;
+
+  z-index: 30;
+
+}
+
+
+.tree-left {
+
+  left: 4%;
+
+}
+
+
+.tree-right {
+
+  right: 4%;
+
+}
+
+
+.tree-trunk {
+
+  position: absolute;
+
+  left: 54px;
+  bottom: 0;
+
+  width: 45px;
+  height: 125px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #8a572f,
+      #ad7040,
+      #7b4b2b
+    );
+
+}
+
+
+.tree-crown {
+
+  position: absolute;
+
+  width: 130px;
+  height: 130px;
+
+  left: 10px;
+  top: 5px;
+
+}
+
+
+.leaf {
+
+  position: absolute;
+
+  width: 78px;
+  height: 78px;
+
+  border-radius: 50%;
+
+  background: #50bd5c;
+
+  box-shadow:
+    inset -7px -8px 0 rgba(0, 0, 0, 0.06);
+
+}
+
+
+.leaf-1 {
+
+  left: 0;
+  top: 32px;
+
+}
+
+
+.leaf-2 {
+
+  left: 42px;
+  top: 0;
+
+  background: #63ca66;
+
+}
+
+
+.leaf-3 {
+
+  right: 0;
+  top: 32px;
+
+  background: #45b653;
+
+}
+
+
+.leaf-4 {
+
+  left: 27px;
+  top: 45px;
+
+  background: #57c75e;
+
+}
+
+
+/* =========================================================
+   ANIMAL BASE
+========================================================= */
+
+.world-animal {
+
+  position: absolute;
+
+  z-index: 45;
+
+  animation:
+    animalBounce 3s ease-in-out infinite;
+
+}
+
+
+@keyframes animalBounce {
+
+  0%,
+  100% {
+
+    transform:
+      translateY(0);
+
+  }
+
+  50% {
+
+    transform:
+      translateY(-10px);
+
+  }
+
+}
+
+
+/* =========================================================
+   LION
+========================================================= */
+
+.animal-lion {
+
+  left: 19%;
+
+  bottom: 25%;
+
+}
+
+
+.animal-body {
+
+  position: relative;
+
+  width: 130px;
+  height: 145px;
+
+  border-radius:
+    60% 60% 45% 45%;
+
+  background: #f5b942;
+
+  box-shadow:
+    inset -10px -12px 0 rgba(0, 0, 0, 0.08);
+
+}
+
+
+.lion-face {
+
+  position: absolute;
+
+  width: 105px;
+  height: 105px;
+
+  top: -5px;
+  left: 13px;
+
+  border-radius: 50%;
+
+  background: #f8c94f;
+
+}
+
+
+.lion-ear {
+
+  position: absolute;
+
+  width: 30px;
+  height: 30px;
+
+  top: -7px;
+
+  border-radius: 50%;
+
+  background: #e69f35;
+
+}
+
+
+.ear-left {
+
+  left: 8px;
+
+}
+
+
+.ear-right {
+
+  right: 8px;
+
+}
+
+
+.lion-eye {
+
+  position: absolute;
+
+  width: 9px;
+  height: 12px;
+
+  top: 42px;
+
+  border-radius: 50%;
+
+  background: #382719;
+
+}
+
+
+.eye-left {
+
+  left: 30px;
+
+}
+
+
+.eye-right {
+
+  right: 30px;
+
+}
+
+
+.lion-nose {
+
+  position: absolute;
+
+  width: 16px;
+  height: 12px;
+
+  left: 45px;
+  top: 58px;
+
+  border-radius: 50%;
+
+  background: #493021;
+
+}
+
+
+.lion-mouth {
+
+  position: absolute;
+
+  width: 25px;
+  height: 13px;
+
+  left: 40px;
+  top: 70px;
+
+  border-bottom:
+    3px solid #493021;
+
+  border-radius: 50%;
+
+}
+
+
+/* =========================================================
+   ELEPHANT
+========================================================= */
+
+.animal-elephant {
+
+  right: 18%;
+
+  bottom: 24%;
+
+  animation-delay: 1.2s;
+
+}
+
+
+.elephant-body {
+
+  position: relative;
+
+  width: 150px;
+  height: 135px;
+
+  border-radius: 55% 55% 45% 45%;
+
+  background: #9faec0;
+
+  box-shadow:
+    inset -12px -12px 0 rgba(0, 0, 0, 0.08);
+
+}
+
+
+.elephant-ear {
+
+  position: absolute;
+
+  width: 75px;
+  height: 95px;
+
+  left: -35px;
+  top: 5px;
+
+  border-radius: 50%;
+
+  background: #8f9eaf;
+
+  transform: rotate(-15deg);
+
+}
+
+
+.elephant-eye {
+
+  position: absolute;
+
+  width: 9px;
+  height: 11px;
+
+  right: 38px;
+  top: 43px;
+
+  border-radius: 50%;
+
+  background: #263544;
+
+}
+
+
+.elephant-trunk {
+
+  position: absolute;
+
+  width: 42px;
+  height: 85px;
+
+  right: -15px;
+  top: 53px;
+
+  border-radius:
+    0 0 25px 25px;
+
+  border-right:
+    18px solid #9faec0;
+
+  transform:
+    rotate(-8deg);
+
+}
+
+
+/* =========================================================
+   MAIN MENU
+========================================================= */
+
+.main-menu {
+
+  position: absolute;
+
+  left: 50%;
+
+  bottom: 27%;
+
+  transform: translateX(-50%);
+
+  z-index: 70;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+}
+
+
+.welcome-text {
+
+  margin-bottom: 13px;
+
+  padding: 7px 18px;
+
+  border-radius: 25px;
+
+  background: rgba(255, 255, 255, 0.86);
+
+  color: #397a9d;
+
+  font-size:
+    clamp(14px, 1.8vw, 20px);
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.10);
+
+}
+
+
+/* =========================================================
+   ADVENTURE BUTTON
+========================================================= */
+
+.adventure-button {
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  min-width: 390px;
+
+  padding: 19px 28px;
+
+  border: 5px solid rgba(255, 255, 255, 0.90);
+
+  border-radius: 32px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffd84d 0%,
+      #ffb52e 100%
+    );
+
+  color: white;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 0 #d98217,
+    0 16px 25px rgba(0, 0, 0, 0.20);
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+
+}
+
+
+.adventure-button:hover {
+
+  transform:
+    translateY(-5px)
+    scale(1.03);
+
+  box-shadow:
+    0 13px 0 #d98217,
+    0 20px 30px rgba(0, 0, 0, 0.22);
+
+}
+
+
+.adventure-button:active {
+
+  transform:
+    translateY(4px);
+
+  box-shadow:
+    0 3px 0 #d98217,
+    0 7px 12px rgba(0, 0, 0, 0.15);
+
+}
+
+
+.adventure-icon {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 65px;
+  height: 65px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.30);
+
+  font-size: 43px;
+
+}
+
+
+.adventure-content {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  flex: 1;
+
+}
+
+
+.adventure-title {
+
+  font-size:
+    clamp(18px, 2vw, 26px);
+
+  font-weight: 1000;
+
+  letter-spacing: 3px;
+
+}
+
+
+.adventure-subtitle {
+
+  font-size:
+    clamp(25px, 3vw, 36px);
+
+  font-weight: 1000;
+
+  letter-spacing: 3px;
+
+  line-height: 1;
+
+}
+
+
+.adventure-arrow {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 45px;
+  height: 45px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.30);
+
+  font-size: 20px;
+
+}
+
+
+/* =========================================================
+   FLOWERS
+========================================================= */
+
+.flower {
+
+  position: absolute;
+
+  z-index: 55;
+
+  font-size: 32px;
+
+  animation:
+    flowerFloat 2.5s ease-in-out infinite;
+
+}
+
+
+.flower-1 {
+
+  left: 28%;
+
+  bottom: 13%;
+
+}
+
+
+.flower-2 {
+
+  left: 35%;
+
+  bottom: 11%;
+
+  animation-delay: 0.5s;
+
+}
+
+
+.flower-3 {
+
+  right: 33%;
+
+  bottom: 13%;
+
+  animation-delay: 0.9s;
+
+}
+
+
+.flower-4 {
+
+  right: 27%;
+
+  bottom: 10%;
+
+  animation-delay: 1.3s;
+
+}
+
+
+.flower-5 {
+
+  left: 12%;
+
+  bottom: 11%;
+
+  animation-delay: 1.7s;
+
+}
+
+
+@keyframes flowerFloat {
+
+  0%,
+  100% {
+
+    transform:
+      translateY(0);
+
+  }
+
+  50% {
+
+    transform:
+      translateY(-5px);
+
+  }
+
+}
+
+
+/* =========================================================
+   GROUND
+========================================================= */
+
+.ground {
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 21%;
+
+  z-index: 20;
+
+  background:
+    linear-gradient(
+      180deg,
+      #76cf58,
+      #4fae43
+    );
+
+  border-radius:
+    50% 50% 0 0 /
+    20% 20% 0 0;
+
+}
+
+
+.grass {
+
+  position: absolute;
+
+  width: 10px;
+  height: 30px;
+
+  border-radius: 10px;
+
+  background: #3d963a;
+
+  transform-origin: bottom;
+
+  animation:
+    grassMove 2s ease-in-out infinite;
+
+}
+
+
+.grass-1 {
+
+  left: 20%;
+
+  top: 15px;
+
+}
+
+
+.grass-2 {
+
+  left: 40%;
+
+  top: 35px;
+
+  animation-delay: 0.4s;
+
+}
+
+
+.grass-3 {
+
+  left: 60%;
+
+  top: 20px;
+
+  animation-delay: 0.8s;
+
+}
+
+
+.grass-4 {
+
+  left: 75%;
+
+  top: 40px;
+
+  animation-delay: 1.2s;
+
+}
+
+
+.grass-5 {
+
+  left: 90%;
+
+  top: 18px;
+
+  animation-delay: 1.6s;
+
+}
+
+
+@keyframes grassMove {
+
+  0%,
+  100% {
+
+    transform:
+      rotate(-8deg);
+
+  }
+
+  50% {
+
+    transform:
+      rotate(8deg);
+
+  }
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.game-footer {
+
+  position: absolute;
+
+  bottom: 10px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  z-index: 90;
+
+  color: rgba(255, 255, 255, 0.90);
+
+  font-size:
+    clamp(10px, 1.2vw, 14px);
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  white-space: nowrap;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .tree {
+
+    transform: scale(0.75);
+
+    transform-origin: bottom;
+
+  }
+
+
+  .animal-lion {
+
+    left: 10%;
+
+  }
+
+
+  .animal-elephant {
+
+    right: 10%;
+
+  }
+
+
+  .adventure-button {
+
+    min-width: 340px;
+
+  }
+
+}
+
+
+/* =========================================================
    MOBILE
-===================================== */
+========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 650px) {
 
-  .home-stage {
-    width: 100vw;
-    height: 100vh;
+  .home-screen {
+
+    min-height: 500px;
+
   }
 
-  .sound-hotspot {
-    left: 2%;
-    top: 2%;
 
-    width: 15%;
-    height: 15%;
+  .sun {
+
+    width: 70px;
+    height: 70px;
+
+    top: 25px;
+    right: 25px;
+
   }
 
-  .exit-hotspot {
-    right: 2%;
-    top: 2%;
 
-    width: 15%;
-    height: 15%;
+  .top-controls {
+
+    top: 15px;
+    left: 15px;
+
   }
 
-  .animal-hotspot {
-    left: 6%;
-    top: 40%;
 
-    width: 42%;
-    height: 30%;
+  .control-button {
+
+    width: 48px;
+    height: 48px;
+
   }
+
+
+  .control-icon {
+
+    font-size: 21px;
+
+  }
+
+
+  .game-header {
+
+    top: 8%;
+
+  }
+
+
+  .logo-kids {
+
+    letter-spacing: 3px;
+
+  }
+
+
+  .logo-learning {
+
+    letter-spacing: 4px;
+
+  }
+
+
+  .logo-world {
+
+    letter-spacing: 4px;
+
+  }
+
+
+  .logo-subtitle {
+
+    margin-top: 8px;
+
+    padding:
+      6px 12px;
+
+  }
+
+
+  .tree {
+
+    transform: scale(0.50);
+
+  }
+
+
+  .tree-left {
+
+    left: -45px;
+
+  }
+
+
+  .tree-right {
+
+    right: -45px;
+
+  }
+
+
+  .animal-lion {
+
+    left: 5%;
+
+    bottom: 27%;
+
+    transform: scale(0.60);
+
+    transform-origin: bottom;
+
+  }
+
+
+  .animal-elephant {
+
+    right: 5%;
+
+    bottom: 26%;
+
+    transform: scale(0.60);
+
+    transform-origin: bottom;
+
+  }
+
+
+  .main-menu {
+
+    bottom: 29%;
+
+  }
+
+
+  .adventure-button {
+
+    min-width: 285px;
+
+    padding: 14px 17px;
+
+    gap: 10px;
+
+    border-radius: 25px;
+
+  }
+
+
+  .adventure-icon {
+
+    width: 48px;
+    height: 48px;
+
+    font-size: 30px;
+
+  }
+
+
+  .adventure-title {
+
+    font-size: 15px;
+
+    letter-spacing: 2px;
+
+  }
+
+
+  .adventure-subtitle {
+
+    font-size: 22px;
+
+    letter-spacing: 2px;
+
+  }
+
+
+  .adventure-arrow {
+
+    width: 35px;
+    height: 35px;
+
+    font-size: 15px;
+
+  }
+
+
+  .welcome-text {
+
+    font-size: 12px;
+
+    padding:
+      6px 12px;
+
+  }
+
+
+  .flower {
+
+    font-size: 23px;
+
+  }
+
+
+  .game-footer {
+
+    display: none;
+
+  }
+
 }
