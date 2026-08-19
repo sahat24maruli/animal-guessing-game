@@ -16,6 +16,51 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =====================================
+     BACKGROUND MUSIC
+  ===================================== */
+
+  const backgroundMusic =
+    new Audio("assets/audio/background-music.wav");
+
+  backgroundMusic.loop = true;
+  backgroundMusic.volume = 0.5;
+
+  let soundEnabled = true;
+  let musicStarted = false;
+
+
+  /* =====================================
+     START MUSIC ON FIRST USER CLICK
+  ===================================== */
+
+  document.addEventListener("click", () => {
+
+    if (!musicStarted && soundEnabled) {
+
+      backgroundMusic
+        .play()
+        .then(() => {
+
+          musicStarted = true;
+
+          console.log("Background music started");
+
+        })
+        .catch((error) => {
+
+          console.log(
+            "Background music could not start:",
+            error
+          );
+
+        });
+
+    }
+
+  }, { once: true });
+
+
+  /* =====================================
      ANIMAL ADVENTURE
   ===================================== */
 
@@ -32,17 +77,40 @@ document.addEventListener("DOMContentLoaded", () => {
      SOUND
   ===================================== */
 
-  let soundEnabled = true;
+  soundButton.addEventListener("click", (event) => {
 
-  soundButton.addEventListener("click", () => {
+    event.stopPropagation();
 
     soundEnabled = !soundEnabled;
 
-    console.log(
-      soundEnabled
-        ? "Sound ON"
-        : "Sound OFF"
-    );
+
+    if (soundEnabled) {
+
+      backgroundMusic
+        .play()
+        .then(() => {
+
+          musicStarted = true;
+
+          console.log("Sound ON");
+
+        })
+        .catch((error) => {
+
+          console.log(
+            "Could not play music:",
+            error
+          );
+
+        });
+
+    } else {
+
+      backgroundMusic.pause();
+
+      console.log("Sound OFF");
+
+    }
 
   });
 
