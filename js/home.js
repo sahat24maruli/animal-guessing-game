@@ -1,145 +1,215 @@
+
 /* =========================================================
    KIDS LEARNING WORLD
    HOME SCREEN
 ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
 
-  const animalAdventureButton =
-    document.getElementById("animalAdventureButton");
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-  const soundButton =
-    document.getElementById("soundButton");
+const soundButton = document.getElementById("soundButton");
+const soundIcon = document.getElementById("soundIcon");
 
-  const exitButton =
-    document.getElementById("exitButton");
+const exitButton = document.getElementById("exitButton");
 
+const animalAdventureButton =
+  document.getElementById("animalAdventureButton");
 
-  /* =====================================
-     BACKGROUND MUSIC
-  ===================================== */
+const abcAdventureButton =
+  document.getElementById("abcAdventureButton");
 
-  const backgroundMusic =
-    new Audio("assets/audio/background-music.wav");
+const numberAdventureButton =
+  document.getElementById("numberAdventureButton");
 
-  backgroundMusic.loop = true;
-  backgroundMusic.volume = 0.5;
+const colorAdventureButton =
+  document.getElementById("colorAdventureButton");
 
-  let soundEnabled = true;
-  let musicStarted = false;
-
-
-  /* =====================================
-     START MUSIC ON FIRST USER CLICK
-  ===================================== */
-
-  document.addEventListener("click", () => {
-
-    if (!musicStarted && soundEnabled) {
-
-      backgroundMusic
-        .play()
-        .then(() => {
-
-          musicStarted = true;
-
-          console.log("Background music started");
-
-        })
-        .catch((error) => {
-
-          console.log(
-            "Background music could not start:",
-            error
-          );
-
-        });
-
-    }
-
-  }, { once: true });
+const backgroundMusic =
+  document.getElementById("backgroundMusic");
 
 
-  /* =====================================
-     ANIMAL ADVENTURE
-  ===================================== */
+/* =========================================================
+   SOUND STATE
+========================================================= */
 
-  animalAdventureButton.addEventListener("click", () => {
+let soundEnabled = true;
 
-    console.log("Opening Animal Adventure...");
+
+/* =========================================================
+   SOUND BUTTON
+========================================================= */
+
+soundButton.addEventListener("click", () => {
+
+  soundEnabled = !soundEnabled;
+
+  if (backgroundMusic) {
+
+    backgroundMusic.muted = !soundEnabled;
+
+  }
+
+
+  if (soundEnabled) {
+
+    soundIcon.textContent = "🔊";
+
+    soundButton.setAttribute(
+      "aria-pressed",
+      "false"
+    );
+
+  } else {
+
+    soundIcon.textContent = "🔇";
+
+    soundButton.setAttribute(
+      "aria-pressed",
+      "true"
+    );
+
+  }
+
+});
+
+
+/* =========================================================
+   START BACKGROUND MUSIC
+========================================================= */
+
+function startBackgroundMusic() {
+
+  if (!backgroundMusic || !soundEnabled) {
+    return;
+  }
+
+
+  backgroundMusic.volume = 0.35;
+
+
+  const playPromise =
+    backgroundMusic.play();
+
+
+  if (playPromise !== undefined) {
+
+    playPromise.catch(() => {
+
+      /*
+        Modern browsers may block
+        autoplay until the user interacts
+        with the page.
+      */
+
+    });
+
+  }
+
+}
+
+
+/*
+  Try to start music after the first
+  user interaction.
+*/
+
+document.addEventListener(
+  "click",
+  startBackgroundMusic,
+  { once: true }
+);
+
+
+/* =========================================================
+   ANIMAL ADVENTURE
+========================================================= */
+
+animalAdventureButton.addEventListener(
+  "click",
+  () => {
 
     window.location.href = "game.html";
 
-  });
+  }
+);
 
 
-  /* =====================================
-     SOUND
-  ===================================== */
+/* =========================================================
+   FUTURE GAMES
+========================================================= */
 
-  soundButton.addEventListener("click", (event) => {
+abcAdventureButton.addEventListener(
+  "click",
+  () => {
 
-    event.stopPropagation();
+    showComingSoon("ABC Adventure");
 
-    soundEnabled = !soundEnabled;
-
-
-    if (soundEnabled) {
-
-      backgroundMusic
-        .play()
-        .then(() => {
-
-          musicStarted = true;
-
-          console.log("Sound ON");
-
-        })
-        .catch((error) => {
-
-          console.log(
-            "Could not play music:",
-            error
-          );
-
-        });
-
-    } else {
-
-      backgroundMusic.pause();
-
-      console.log("Sound OFF");
-
-    }
-
-  });
+  }
+);
 
 
-  /* =====================================
-     EXIT
-  ===================================== */
+numberAdventureButton.addEventListener(
+  "click",
+  () => {
 
-  exitButton.addEventListener("click", () => {
+    showComingSoon("Number Adventure");
 
-    console.log("Exit button clicked");
+  }
+);
 
-    const confirmed = window.confirm(
-      "Do you want to exit Kids Learning World?"
-    );
 
-    if (!confirmed) {
-      return;
-    }
+colorAdventureButton.addEventListener(
+  "click",
+  () => {
+
+    showComingSoon("Color Adventure");
+
+  }
+);
+
+
+/* =========================================================
+   COMING SOON
+========================================================= */
+
+function showComingSoon(gameName) {
+
+  alert(
+    `${gameName} is coming soon!`
+  );
+
+}
+
+
+/* =========================================================
+   EXIT
+========================================================= */
+
+exitButton.addEventListener(
+  "click",
+  () => {
 
     /*
-      Browsers normally don't allow a normal webpage
-      to close its own tab.
+      Browsers usually block scripts
+      from closing tabs that were not
+      opened by JavaScript.
 
-      For now we return to a blank page.
+      We therefore try to close the
+      window and provide a fallback.
     */
 
-    window.location.href = "about:blank";
+    window.close();
 
-  });
+  }
+);
 
-});
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+console.log(
+  "Kids Learning World Home Screen loaded."
+);

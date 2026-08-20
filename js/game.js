@@ -1,613 +1,1856 @@
 /* =========================================================
-   ANIMAL ADVENTURE - GUESS THE ANIMAL
-   Mobile-friendly Phaser 3 web game
+   ANIMAL ADVENTURE
+   10 LEVELS
+   10 QUESTIONS PER LEVEL
 ========================================================= */
 
-const ANIMALS = [
-  { name: "Cat", emoji: "🐱", image: "assets/animals/cat.png", color: "#FFD166", article: "a" },
-  { name: "Dog", emoji: "🐶", image: "assets/animals/dog.png", color: "#F4A261", article: "a" },
-  { name: "Elephant", emoji: "🐘", image: "assets/animals/elephant.png", color: "#BDE0FE", article: "an" },
-  { name: "Lion", emoji: "🦁", image: "assets/animals/lion.png", color: "#F6BD60", article: "a" },
-  { name: "Monkey", emoji: "🐵", image: "assets/animals/monkey.png", color: "#C9ADA7", article: "a" },
-  { name: "Rabbit", emoji: "🐰", image: "assets/animals/rabbit.png", color: "#EADCF8", article: "a" },
-  { name: "Duck", emoji: "🦆", image: "assets/animals/duck.png", color: "#FFE066", article: "a" },
-  { name: "Cow", emoji: "🐮", image: "assets/animals/cow.png", color: "#F8F9FA", article: "a" },
-  { name: "Horse", emoji: "🐴", image: "assets/animals/horse.png", color: "#D4A373", article: "a" },
-  { name: "Zebra", emoji: "🦓", image: "assets/animals/zebra.png", color: "#E9ECEF", article: "a" }
+
+/* =========================================================
+   GAME SETTINGS
+========================================================= */
+
+const TOTAL_LEVELS = 10;
+const QUESTIONS_PER_LEVEL = 10;
+const PASSING_SCORE = 80;
+
+
+/* =========================================================
+   AUDIO SETTINGS
+========================================================= */
+
+let audioMuted = false;
+
+let backgroundMusic = null;
+
+
+/* =========================================================
+   GAME STATE
+========================================================= */
+
+let currentLevel = 1;
+let currentQuestionIndex = 0;
+let currentScore = 0;
+
+let currentQuestions = [];
+
+let answerLocked = false;
+
+
+/* =========================================================
+   DOM ELEMENTS
+========================================================= */
+
+let soundButton;
+
+let levelIndicator;
+let questionIndicator;
+let scoreIndicator;
+
+let animalImage;
+let questionText;
+let answerContainer;
+let feedback;
+
+let resultModal;
+let resultStars;
+let resultTitle;
+let resultMessage;
+let resultScore;
+let resultButtons;
+
+
+/* =========================================================
+   ANIMAL DATABASE
+========================================================= */
+
+/*
+ * IMPORTANT:
+ *
+ * Level 1, 2 and 3 use DIFFERENT animals.
+ * Level 4, 5 and 6 use DIFFERENT animals.
+ * Level 7, 8 and 9 use DIFFERENT animals.
+ *
+ * All images use:
+ *
+ * assets/animals/
+ *
+ * Missing images are intentionally allowed to show
+ * as broken images until the actual files are added.
+ */
+
+
+/* =========================================================
+   LAND ANIMALS
+========================================================= */
+
+const landLevel1 = [
+
+  {
+    name: "Cat",
+    image: "assets/animals/cat.png"
+  },
+
+  {
+    name: "Dog",
+    image: "assets/animals/dog.png"
+  },
+
+  {
+    name: "Elephant",
+    image: "assets/animals/elephant.png"
+  },
+
+  {
+    name: "Lion",
+    image: "assets/animals/lion.png"
+  },
+
+  {
+    name: "Monkey",
+    image: "assets/animals/monkey.png"
+  },
+
+  {
+    name: "Rabbit",
+    image: "assets/animals/rabbit.png"
+  },
+
+  {
+    name: "Tiger",
+    image: "assets/animals/tiger.png"
+  },
+
+  {
+    name: "Bear",
+    image: "assets/animals/bear.png"
+  },
+
+  {
+    name: "Giraffe",
+    image: "assets/animals/giraffe.png"
+  },
+
+  {
+    name: "Zebra",
+    image: "assets/animals/zebra.png"
+  }
+
 ];
 
-let game;
-let scene;
-let currentRound = 0;
-let score = 0;
-let currentAnimal = null;
-let answerButtons = [];
-let uiObjects = [];
-let audioContext = null;
-let musicTimer = null;
-let gameStarted = false;
 
-const config = {
-  type: Phaser.AUTO,
-  parent: "game-container",
-  backgroundColor: "#75d66b",
-  scale: {
-    mode: Phaser.Scale.RESIZE,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-    width: 1280,
-    height: 720
+const landLevel2 = [
+
+  {
+    name: "Kangaroo",
+    image: "assets/animals/kangaroo.png"
   },
-  render: {
-    antialias: true,
-    roundPixels: true
+
+  {
+    name: "Panda",
+    image: "assets/animals/panda.png"
   },
-  scene: {
-    preload,
-    create,
-    update
+
+  {
+    name: "Horse",
+    image: "assets/animals/horse.png"
+  },
+
+  {
+    name: "Cow",
+    image: "assets/animals/cow.png"
+  },
+
+  {
+    name: "Sheep",
+    image: "assets/animals/sheep.png"
+  },
+
+  {
+    name: "Pig",
+    image: "assets/animals/pig.png"
+  },
+
+  {
+    name: "Fox",
+    image: "assets/animals/fox.png"
+  },
+
+  {
+    name: "Deer",
+    image: "assets/animals/deer.png"
+  },
+
+  {
+    name: "Camel",
+    image: "assets/animals/camel.png"
+  },
+
+  {
+    name: "Rhinoceros",
+    image: "assets/animals/rhinoceros.png"
   }
+
+];
+
+
+const landLevel3 = [
+
+  {
+    name: "Hippopotamus",
+    image: "assets/animals/hippopotamus.png"
+  },
+
+  {
+    name: "Goat",
+    image: "assets/animals/goat.png"
+  },
+
+  {
+    name: "Koala",
+    image: "assets/animals/koala.png"
+  },
+
+  {
+    name: "Cheetah",
+    image: "assets/animals/cheetah.png"
+  },
+
+  {
+    name: "Wolf",
+    image: "assets/animals/wolf.png"
+  },
+
+  {
+    name: "Leopard",
+    image: "assets/animals/leopard.png"
+  },
+
+  {
+    name: "Gorilla",
+    image: "assets/animals/gorilla.png"
+  },
+
+  {
+    name: "Buffalo",
+    image: "assets/animals/buffalo.png"
+  },
+
+  {
+    name: "Donkey",
+    image: "assets/animals/donkey.png"
+  },
+
+  {
+    name: "Squirrel",
+    image: "assets/animals/squirrel.png"
+  }
+
+];
+
+
+/* =========================================================
+   AIR ANIMALS
+========================================================= */
+
+/* =========================================================
+   AIR ANIMALS
+========================================================= */
+
+const airLevel4 = [
+
+  {
+    name: "Owl",
+    image: "assets/animals/owl.png"
+  },
+
+  {
+    name: "Eagle",
+    image: "assets/animals/eagle.png"
+  },
+
+  {
+    name: "Parrot",
+    image: "assets/animals/parrot.png"
+  },
+
+  {
+    name: "Flamingo",
+    image: "assets/animals/flamingo.png"
+  },
+
+  {
+    name: "Peacock",
+    image: "assets/animals/peacock.png"
+  },
+
+  {
+    name: "Penguin",
+    image: "assets/animals/penguin.png"
+  },
+
+  {
+    name: "Bat",
+    image: "assets/animals/bat.png"
+  },
+
+  {
+    name: "Toucan",
+    image: "assets/animals/toucan.png"
+  },
+
+  {
+    name: "Hummingbird",
+    image: "assets/animals/hummingbird.png"
+  },
+
+  {
+    name: "Woodpecker",
+    image: "assets/animals/woodpecker.png"
+  }
+
+];
+
+
+const airLevel5 = [
+
+  {
+    name: "Canary",
+    image: "assets/animals/canary.png"
+  },
+
+  {
+    name: "Swan",
+    image: "assets/animals/swan.png"
+  },
+
+  {
+    name: "Duck",
+    image: "assets/animals/duck.png"
+  },
+
+  {
+    name: "Goose",
+    image: "assets/animals/goose.png"
+  },
+
+  {
+    name: "Pigeon",
+    image: "assets/animals/pigeon.png"
+  },
+
+  {
+    name: "Seagull",
+    image: "assets/animals/seagull.png"
+  },
+
+  {
+    name: "Pelican",
+    image: "assets/animals/pelican.png"
+  },
+
+  {
+    name: "Kingfisher",
+    image: "assets/animals/kingfisher.png"
+  },
+
+  {
+    name: "Macaw",
+    image: "assets/animals/macaw.png"
+  },
+
+  {
+    name: "Hornbill",
+    image: "assets/animals/hornbill.png"
+  }
+
+];
+
+
+const airLevel6 = [
+
+  {
+    name: "Butterfly",
+    image: "assets/animals/butterfly.png"
+  },
+
+  {
+    name: "Bee",
+    image: "assets/animals/bee.png"
+  },
+
+  {
+    name: "Dragonfly",
+    image: "assets/animals/dragonfly.png"
+  },
+
+  {
+    name: "Ladybug",
+    image: "assets/animals/ladybug.png"
+  },
+
+  {
+    name: "Hawk",
+    image: "assets/animals/hawk.png"
+  },
+
+  {
+    name: "Falcon",
+    image: "assets/animals/falcon.png"
+  },
+
+  {
+    name: "Crow",
+    image: "assets/animals/crow.png"
+  },
+
+  {
+    name: "Stork",
+    image: "assets/animals/stork.png"
+  },
+
+  {
+    name: "Crane",
+    image: "assets/animals/crane.png"
+  },
+
+  {
+    name: "Robin",
+    image: "assets/animals/robin.png"
+  }
+
+];
+
+
+/* =========================================================
+   SEA ANIMALS
+========================================================= */
+
+const seaLevel7 = [
+
+  {
+    name: "Dolphin",
+    image: "assets/animals/dolphin.png"
+  },
+
+  {
+    name: "Shark",
+    image: "assets/animals/shark.png"
+  },
+
+  {
+    name: "Whale",
+    image: "assets/animals/whale.png"
+  },
+
+  {
+    name: "Octopus",
+    image: "assets/animals/octopus.png"
+  },
+
+  {
+    name: "Crab",
+    image: "assets/animals/crab.png"
+  },
+
+  {
+    name: "Sea Turtle",
+    image: "assets/animals/sea-turtle.png"
+  },
+
+  {
+    name: "Jellyfish",
+    image: "assets/animals/jellyfish.png"
+  },
+
+  {
+    name: "Lobster",
+    image: "assets/animals/lobster.png"
+  },
+
+  {
+    name: "Seahorse",
+    image: "assets/animals/seahorse.png"
+  },
+
+  {
+    name: "Starfish",
+    image: "assets/animals/starfish.png"
+  }
+
+];
+
+
+const seaLevel8 = [
+
+  {
+    name: "Seal",
+    image: "assets/animals/seal.png"
+  },
+
+  {
+    name: "Walrus",
+    image: "assets/animals/walrus.png"
+  },
+
+  {
+    name: "Stingray",
+    image: "assets/animals/stingray.png"
+  },
+
+  {
+    name: "Clownfish",
+    image: "assets/animals/clownfish.png"
+  },
+
+  {
+    name: "Squid",
+    image: "assets/animals/squid.png"
+  },
+
+  {
+    name: "Eel",
+    image: "assets/animals/eel.png"
+  },
+
+  {
+    name: "Otter",
+    image: "assets/animals/otter.png"
+  },
+
+  {
+    name: "Swordfish",
+    image: "assets/animals/swordfish.png"
+  },
+
+  {
+    name: "Angelfish",
+    image: "assets/animals/angelfish.png"
+  },
+
+  {
+    name: "Pufferfish",
+    image: "assets/animals/pufferfish.png"
+  }
+
+];
+
+
+const seaLevel9 = [
+
+  {
+    name: "Manta Ray",
+    image: "assets/animals/manta-ray.png"
+  },
+
+  {
+    name: "Barracuda",
+    image: "assets/animals/barracuda.png"
+  },
+
+  {
+    name: "Moray Eel",
+    image: "assets/animals/moray-eel.png"
+  },
+
+  {
+    name: "Marlin",
+    image: "assets/animals/marlin.png"
+  },
+
+  {
+    name: "Tuna",
+    image: "assets/animals/tuna.png"
+  },
+
+  {
+    name: "Salmon",
+    image: "assets/animals/salmon.png"
+  },
+
+  {
+    name: "Anchovy",
+    image: "assets/animals/anchovy.png"
+  },
+
+  {
+    name: "Grouper",
+    image: "assets/animals/grouper.png"
+  },
+
+  {
+    name: "Coral",
+    image: "assets/animals/coral.png"
+  },
+
+  {
+    name: "Sea Urchin",
+    image: "assets/animals/sea-urchin.png"
+  }
+
+];
+
+
+/* =========================================================
+   LEVEL DATABASE
+========================================================= */
+
+const levelData = {
+
+  1: {
+    category: "Land Animals",
+    animals: landLevel1
+  },
+
+  2: {
+    category: "Land Animals",
+    animals: landLevel2
+  },
+
+  3: {
+    category: "Land Animals",
+    animals: landLevel3
+  },
+
+  4: {
+    category: "Air Animals",
+    animals: airLevel4
+  },
+
+  5: {
+    category: "Air Animals",
+    animals: airLevel5
+  },
+
+  6: {
+    category: "Air Animals",
+    animals: airLevel6
+  },
+
+  7: {
+    category: "Sea Animals",
+    animals: seaLevel7
+  },
+
+  8: {
+    category: "Sea Animals",
+    animals: seaLevel8
+  },
+
+  9: {
+    category: "Sea Animals",
+    animals: seaLevel9
+  },
+
+  10: {
+    category: "Mixed Animals",
+    animals: null
+  }
+
 };
 
-window.addEventListener("error", (event) => {
-  console.error("Game error:", event.error || event.message);
-});
 
-window.addEventListener("resize", () => {
-  if (game && game.scale) game.scale.refresh();
-});
+/* =========================================================
+   BUILD MIXED ANIMAL DATABASE
+========================================================= */
 
-game = new Phaser.Game(config);
+const allAnimals = [
 
-function preload() {
-  ANIMALS.forEach(animal => {
-    if (animal.image) {
-      this.load.image(animal.name, animal.image);
-    }
-  });
+  ...landLevel1,
+  ...landLevel2,
+  ...landLevel3,
+
+  ...airLevel4,
+  ...airLevel5,
+  ...airLevel6,
+
+  ...seaLevel7,
+  ...seaLevel8,
+  ...seaLevel9
+
+];
+
+
+/* =========================================================
+   INITIALIZE DOM
+========================================================= */
+
+function initializeDOM() {
+
+  soundButton =
+    document.getElementById("soundButton");
+
+  levelIndicator =
+    document.getElementById("levelIndicator");
+
+  questionIndicator =
+    document.getElementById("questionIndicator");
+
+  scoreIndicator =
+    document.getElementById("scoreIndicator");
+
+  animalImage =
+    document.getElementById("animalImage");
+
+  questionText =
+    document.getElementById("questionText");
+
+  answerContainer =
+    document.getElementById("answerContainer");
+
+  feedback =
+    document.getElementById("feedback");
+
+  resultModal =
+    document.getElementById("resultModal");
+
+  resultStars =
+    document.getElementById("resultStars");
+
+  resultTitle =
+    document.getElementById("resultTitle");
+
+  resultMessage =
+    document.getElementById("resultMessage");
+
+  resultScore =
+    document.getElementById("resultScore");
+
+  resultButtons =
+    document.getElementById("resultButtons");
+
+
+  /*
+   * Background music is optional.
+   * If it exists in HTML, we use it.
+   */
+
+  backgroundMusic =
+    document.getElementById("backgroundMusic");
+
 }
 
-function create() {
-  scene = this;
-  createBackground();
-  showStartScreen();
-}
 
-function update() {}
+/* =========================================================
+   SHUFFLE
+========================================================= */
 
-function addUI(obj) {
-  uiObjects.push(obj);
-  return obj;
-}
+function shuffleArray(array) {
 
-function clearUI() {
-  uiObjects.forEach(obj => {
-    if (obj && obj.active) obj.destroy();
-  });
-  uiObjects = [];
-  answerButtons = [];
-}
+  const shuffled =
+    [...array];
 
-function width() {
-  return scene.scale.width;
-}
+  for (
+    let i = shuffled.length - 1;
+    i > 0;
+    i--
+  ) {
 
-function height() {
-  return scene.scale.height;
-}
+    const j =
+      Math.floor(
+        Math.random() * (i + 1)
+      );
 
-/* ---------------- BACKGROUND ---------------- */
+    [
+      shuffled[i],
+      shuffled[j]
+    ] = [
+      shuffled[j],
+      shuffled[i]
+    ];
 
-function createBackground() {
-  const w = width();
-  const h = height();
-
-  scene.add.rectangle(w / 2, h / 2, w, h, 0x8BDDF5);
-
-  scene.add.circle(w - Math.min(90, w * 0.12), Math.min(85, h * 0.12), 45, 0xFFE066);
-
-  createCloud(w * 0.12, h * 0.13);
-  createCloud(w * 0.42, h * 0.09);
-  createCloud(w * 0.73, h * 0.15);
-
-  scene.add.rectangle(w / 2, h - 75, w, 150, 0x65B741);
-
-  createTree(55, h - 185, 0.9);
-  createTree(145, h - 175, 0.7);
-  createTree(w - 55, h - 185, 0.9);
-  createTree(w - 145, h - 175, 0.7);
-
-  for (let i = 0; i < 30; i++) {
-    scene.add.text(
-      Phaser.Math.Between(0, w),
-      Phaser.Math.Between(Math.max(0, h - 130), h - 15),
-      "🌿",
-      { fontSize: Phaser.Math.Between(16, 26) + "px" }
-    );
-  }
-}
-
-function createCloud(x, y) {
-  scene.add.circle(x, y, 24, 0xFFFFFF, 0.85);
-  scene.add.circle(x + 28, y + 3, 31, 0xFFFFFF, 0.85);
-  scene.add.circle(x + 58, y + 8, 22, 0xFFFFFF, 0.85);
-  scene.add.rectangle(x + 30, y + 14, 72, 26, 0xFFFFFF, 0.85);
-}
-
-function createTree(x, y, scale) {
-  scene.add.rectangle(x, y + 70 * scale, 35 * scale, 130 * scale, 0x8B5A2B);
-  scene.add.circle(x - 30 * scale, y, 55 * scale, 0x2E8B57);
-  scene.add.circle(x + 20 * scale, y - 10 * scale, 65 * scale, 0x3CB371);
-  scene.add.circle(x + 55 * scale, y + 5 * scale, 48 * scale, 0x228B22);
-}
-
-/* ---------------- AUDIO ---------------- */
-
-function initAudio() {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioContext.state === "suspended") audioContext.resume();
-}
-
-function speak(text) {
-  if (!("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = 0.82;
-  utterance.pitch = 1.12;
-  utterance.volume = 1;
-  window.speechSynthesis.speak(utterance);
-}
-
-function startMusic() {
-  initAudio();
-  if (musicTimer) return;
-
-  const notes = [261.63, 329.63, 392.00, 329.63, 293.66, 349.23, 440.00, 349.23];
-  let index = 0;
-
-  function playNote() {
-    if (!audioContext || audioContext.state !== "running") return;
-
-    const osc = audioContext.createOscillator();
-    const gain = audioContext.createGain();
-
-    osc.type = "sine";
-    osc.frequency.value = notes[index];
-
-    gain.gain.setValueAtTime(0.022, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.32);
-
-    osc.connect(gain);
-    gain.connect(audioContext.destination);
-    osc.start();
-    osc.stop(audioContext.currentTime + 0.32);
-
-    index = (index + 1) % notes.length;
   }
 
-  playNote();
-  musicTimer = setInterval(playNote, 450);
+  return shuffled;
+
 }
 
-function playCorrectSound() {
-  initAudio();
-  const frequencies = [523.25, 659.25, 783.99];
 
-  frequencies.forEach((frequency, index) => {
-    const osc = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+/* =========================================================
+   GET RANDOM QUESTIONS
+========================================================= */
 
-    osc.type = "triangle";
-    osc.frequency.value = frequency;
+function getQuestionsForLevel(level) {
 
-    const start = audioContext.currentTime + index * 0.08;
-    gain.gain.setValueAtTime(0.08, start);
-    gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+  let sourceAnimals;
 
-    osc.connect(gain);
-    gain.connect(audioContext.destination);
-    osc.start(start);
-    osc.stop(start + 0.35);
-  });
+
+  /*
+   * Level 10 uses all animals.
+   */
+
+  if (level === 10) {
+
+    sourceAnimals =
+      allAnimals;
+
+  } else {
+
+    sourceAnimals =
+      levelData[level].animals;
+
+  }
+
+
+  /*
+   * Every level already contains exactly
+   * 10 animals.
+   *
+   * Shuffle them so the order changes
+   * every time the level starts.
+   */
+
+  return shuffleArray(
+    sourceAnimals
+  ).slice(
+    0,
+    QUESTIONS_PER_LEVEL
+  );
+
 }
 
-function playWrongSound() {
-  initAudio();
 
-  const osc = audioContext.createOscillator();
-  const gain = audioContext.createGain();
+/* =========================================================
+   START LEVEL
+========================================================= */
 
-  osc.type = "sine";
-  osc.frequency.value = 180;
+function startLevel(level) {
 
-  gain.gain.setValueAtTime(0.06, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.25);
-
-  osc.connect(gain);
-  gain.connect(audioContext.destination);
-  osc.start();
-  osc.stop(audioContext.currentTime + 0.25);
-}
-
-/* ---------------- START SCREEN ---------------- */
-
-function showStartScreen() {
-  clearUI();
-
-  const w = width();
-  const h = height();
-
-  addUI(scene.add.text(w / 2, h * 0.20, "🐾 ANIMAL ADVENTURE 🐾", {
-    fontFamily: '"Arial Rounded MT Bold", "Trebuchet MS", Arial',
-    fontSize: Math.min(w * 0.075, 64) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF",
-    stroke: "#27632A",
-    strokeThickness: 7,
-    align: "center"
-  }).setOrigin(0.5));
-
-  addUI(scene.add.text(w / 2, h * 0.33, "Guess the Animal!", {
-    fontSize: Math.min(w * 0.055, 46) + "px",
-    fontStyle: "bold",
-    color: "#FFF9C4",
-    stroke: "#27632A",
-    strokeThickness: 5
-  }).setOrigin(0.5));
-
-  addUI(scene.add.text(w / 2, h * 0.42, "Learn English • Have Fun • Get Stars!", {
-    fontSize: Math.min(w * 0.032, 28) + "px",
-    color: "#FFFFFF",
-    fontStyle: "bold",
-    align: "center"
-  }).setOrigin(0.5));
-
-  const button = addUI(scene.add.rectangle(
-    w / 2, h * 0.60,
-    Math.min(w * 0.55, 380),
-    86,
-    0xFFB703
-  ).setStrokeStyle(5, 0xFFFFFF).setInteractive({ useHandCursor: true }));
-
-  addUI(scene.add.text(w / 2, h * 0.60, "▶ START GAME", {
-    fontSize: Math.min(w * 0.045, 38) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF",
-    stroke: "#8B5E00",
-    strokeThickness: 4
-  }).setOrigin(0.5));
-
-  button.on("pointerover", () => button.setFillStyle(0xFFD166));
-  button.on("pointerout", () => button.setFillStyle(0xFFB703));
-
-  button.on("pointerdown", () => {
-    initAudio();
-    startMusic();
-    gameStarted = true;
-    startGame();
-  });
-}
-
-/* ---------------- GAME FLOW ---------------- */
-
-function startGame() {
-  currentRound = 0;
-  score = 0;
-  showNextQuestion();
-}
-
-function showNextQuestion() {
-  clearUI();
-
-  if (currentRound >= 10) {
-    showGameOver();
+  if (
+    level < 1 ||
+    level > TOTAL_LEVELS
+  ) {
     return;
   }
 
-  currentAnimal = ANIMALS[currentRound];
-  currentRound++;
-  createQuestion();
 
-  scene.time.delayedCall(350, () => speak("What animal is this?"));
+  currentLevel =
+    level;
+
+  currentQuestionIndex =
+    0;
+
+  currentScore =
+    0;
+
+  answerLocked =
+    false;
+
+
+  currentQuestions =
+    getQuestionsForLevel(
+      currentLevel
+    );
+
+
+  hideResultModal();
+
+  updateLevelUI();
+
+  showQuestion();
+
 }
 
-function createQuestion() {
-  const w = width();
-  const h = height();
-  const compact = h < 600 || w < 600;
 
-  const top = compact ? 18 : 25;
-  const cardY = compact ? h * 0.35 : h * 0.39;
-  const cardH = compact ? Math.min(h * 0.30, 210) : Math.min(h * 0.35, 270);
-  const buttonY = compact ? h * 0.68 : h * 0.69;
-  const buttonH = compact ? 54 : 68;
-  const gap = compact ? 10 : 16;
-  const buttonW = Math.min(w * 0.40, compact ? 180 : 225);
+/* =========================================================
+   UPDATE LEVEL UI
+========================================================= */
 
-  addUI(scene.add.text(25, top, "⭐ Score: " + score, {
-    fontSize: Math.min(w * 0.038, 30) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF",
-    stroke: "#27632A",
-    strokeThickness: 4
-  }));
+function updateLevelUI() {
 
-  addUI(scene.add.text(w - 25, top, `Round ${currentRound} / 10`, {
-    fontSize: Math.min(w * 0.034, 27) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF",
-    stroke: "#27632A",
-    strokeThickness: 4
-  }).setOrigin(1, 0));
+  const level =
+    levelData[currentLevel];
 
-  addUI(scene.add.text(w / 2, compact ? h * 0.11 : h * 0.105, "What animal is this?", {
-    fontSize: Math.min(w * 0.045, 38) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF",
-    stroke: "#27632A",
-    strokeThickness: 5
-  }).setOrigin(0.5));
 
-  const card = addUI(scene.add.rectangle(w / 2, cardY, Math.min(w * 0.50, 440), cardH, 0xFFFFFF)
-    .setStrokeStyle(7, Phaser.Display.Color.HexStringToColor(currentAnimal.color).color));
+  if (levelIndicator) {
 
-const animal = addUI(
-  scene.add.image(
-    w / 2,
-    cardY,
-    currentAnimal.name
-  )
-);
+    levelIndicator.textContent =
+      `Level ${currentLevel}: ${level.category}`;
 
-const maxWidth = Math.min(w * 0.38, 330);
-const maxHeight = cardH * 0.82;
-
-const scale = Math.min(
-  maxWidth / animal.width,
-  maxHeight / animal.height
-);
-
-animal.setScale(scale);
-
-scene.tweens.add({
-  targets: animal,
-  y: cardY - 7,
-  duration: 800,
-  yoyo: true,
-  repeat: -1,
-  ease: "Sine.easeInOut"
-});
-
-  const options = createOptions(currentAnimal.name);
-  const totalW = buttonW * 2 + gap;
-  const startX = w / 2 - totalW / 2;
-
-  options.forEach((option, index) => {
-    const row = Math.floor(index / 2);
-    const col = index % 2;
-    const x = startX + col * (buttonW + gap) + buttonW / 2;
-    const y = buttonY + row * (buttonH + gap);
-    createAnswerButton(option, x, y, buttonW, buttonH);
-  });
-
-  addUI(scene.add.text(w / 2, h - (compact ? 18 : 28), "", {
-    fontSize: Math.min(w * 0.033, 27) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF",
-    stroke: "#27632A",
-    strokeThickness: 4,
-    align: "center"
-  }).setOrigin(0.5));
-
-  scene.questionFeedback = uiObjects[uiObjects.length - 1];
-}
-
-function createOptions(correctAnswer) {
-  const wrong = Phaser.Utils.Array.Shuffle(
-    ANIMALS.filter(a => a.name !== correctAnswer).map(a => a.name)
-  ).slice(0, 3);
-
-  return Phaser.Utils.Array.Shuffle([correctAnswer, ...wrong]);
-}
-
-function createAnswerButton(answer, x, y, w, h) {
-  const button = scene.add.rectangle(x, y, w, h, 0xFFFFFF)
-    .setStrokeStyle(4, 0x58B957)
-    .setInteractive({ useHandCursor: true });
-
-  const text = scene.add.text(x, y, answer, {
-    fontSize: Math.min(w * 0.14, 28) + "px",
-    fontStyle: "bold",
-    color: "#27632A",
-    align: "center"
-  }).setOrigin(0.5);
-
-  addUI(button);
-  addUI(text);
-  button.answerText = text;
-  answerButtons.push(button);
-
-  button.on("pointerover", () => {
-    if (!button.input.enabled) return;
-    button.setFillStyle(0xE8F5E9);
-  });
-
-  button.on("pointerout", () => {
-    button.setFillStyle(0xFFFFFF);
-  });
-
-  button.on("pointerdown", () => {
-    initAudio();
-    checkAnswer(answer, button, text);
-  });
-}
-
-function checkAnswer(answer, button, text) {
-  if (!button.input || !button.input.enabled) return;
-
-  if (answer === currentAnimal.name) {
-    correctAnswer(button, text);
-  } else {
-    wrongAnswer(button, text);
   }
+
+
+  if (questionIndicator) {
+
+    questionIndicator.textContent =
+      `Question ${currentQuestionIndex + 1}/${QUESTIONS_PER_LEVEL}`;
+
+  }
+
+
+  if (scoreIndicator) {
+
+    scoreIndicator.textContent =
+      `Score: ${currentScore}`;
+
+  }
+
 }
 
-function correctAnswer(button, text) {
-  answerButtons.forEach(btn => btn.disableInteractive());
 
-  score += 10;
+/* =========================================================
+   SHOW QUESTION
+========================================================= */
 
-  button.setFillStyle(0x72E06A);
-  button.setStrokeStyle(6, 0x249B22);
-  text.setColor("#FFFFFF");
+function showQuestion() {
 
-  scene.questionFeedback.setText(
-    `Great job! It's ${currentAnimal.article} ${currentAnimal.name}! 🎉`
+  if (
+    currentQuestionIndex >=
+    currentQuestions.length
+  ) {
+
+    finishLevel();
+
+    return;
+
+  }
+
+
+  answerLocked =
+    false;
+
+
+  const question =
+    currentQuestions[
+      currentQuestionIndex
+    ];
+
+
+  /*
+   * IMPORTANT:
+   *
+   * We intentionally set the image
+   * even if the file does not exist.
+   *
+   * This allows the browser to show
+   * a broken image until the real
+   * PNG is added.
+   */
+
+  animalImage.src =
+    question.image;
+
+  animalImage.alt =
+    question.name;
+
+
+  questionText.textContent =
+    "What animal is this?";
+
+
+  /*
+   * Speak ONLY the question.
+   *
+   * Do NOT speak the animal name here,
+   * otherwise the answer would be revealed.
+   */
+
+  speak(
+    "What animal is this?"
   );
 
-  playCorrectSound();
-  speak(`Great job! It's ${currentAnimal.article} ${currentAnimal.name}!`);
-  createStarBurst();
 
-  scene.tweens.add({
-    targets: [button, text],
-    scaleX: 1.07,
-    scaleY: 1.07,
-    duration: 140,
-    yoyo: true,
-    repeat: 2
-  });
+  feedback.textContent =
+    "";
 
-  scene.time.delayedCall(1500, showNextQuestion);
+
+  updateLevelUI();
+
+  createAnswerButtons(
+    question
+  );
+
 }
 
-function wrongAnswer(button, text) {
-  button.setFillStyle(0xFF6B6B);
-  button.setStrokeStyle(5, 0xD62828);
-  text.setColor("#FFFFFF");
 
-  scene.questionFeedback.setText("Try Again! 😊");
+/* =========================================================
+   CREATE ANSWER BUTTONS
+========================================================= */
 
-  playWrongSound();
-  speak("Try again!");
+function createAnswerButtons(
+  correctQuestion
+) {
 
-  const originalX = button.x;
+  answerContainer.innerHTML =
+    "";
 
-  scene.tweens.add({
-    targets: [button, text],
-    x: originalX - 10,
-    duration: 55,
-    yoyo: true,
-    repeat: 3,
-    onComplete: () => {
-      button.x = originalX;
-      text.x = originalX;
-      button.setFillStyle(0xFFFFFF);
-      button.setStrokeStyle(4, 0x58B957);
-      text.setColor("#27632A");
+
+  /*
+   * Create one correct answer
+   * and three random wrong answers.
+   */
+
+  const wrongAnswers =
+    shuffleArray(
+
+      allAnimals.filter(
+        function (animal) {
+
+          return (
+            animal.name !==
+            correctQuestion.name
+          );
+
+        }
+      )
+
+    )
+      .slice(0, 3)
+      .map(
+        function (animal) {
+
+          return animal.name;
+
+        }
+      );
+
+
+  const answers =
+    shuffleArray([
+
+      correctQuestion.name,
+      ...wrongAnswers
+
+    ]);
+
+
+  answers.forEach(
+    function (answer) {
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.type =
+        "button";
+
+      button.className =
+        "answer-button";
+
+      button.textContent =
+        answer;
+
+
+      button.addEventListener(
+        "click",
+        function () {
+
+          handleAnswer(
+            answer,
+            correctQuestion.name,
+            button
+          );
+
+        }
+      );
+
+
+      answerContainer.appendChild(
+        button
+      );
+
     }
-  });
+  );
+
 }
 
-function createStarBurst() {
-  const w = width();
-  const h = height();
 
-  for (let i = 0; i < 14; i++) {
-    const star = scene.add.text(w / 2, h * 0.39, "⭐", {
-      fontSize: Phaser.Math.Between(20, 40) + "px"
-    }).setOrigin(0.5);
+/* =========================================================
+   HANDLE ANSWER
+========================================================= */
 
-    const angle = Phaser.Math.FloatBetween(0, Math.PI * 2);
-    const distance = Phaser.Math.Between(80, 230);
+function handleAnswer(
+  selectedAnswer,
+  correctAnswer,
+  selectedButton
+) {
 
-    scene.tweens.add({
-      targets: star,
-      x: w / 2 + Math.cos(angle) * distance,
-      y: h * 0.39 + Math.sin(angle) * distance,
-      alpha: 0,
-      scale: 1.5,
-      duration: 650,
-      ease: "Cubic.easeOut",
-      onComplete: () => star.destroy()
-    });
+  /*
+   * Prevent double clicks.
+   */
+
+  if (answerLocked) {
+    return;
   }
+
+
+  answerLocked =
+    true;
+
+
+  const buttons =
+    answerContainer.querySelectorAll(
+      ".answer-button"
+    );
+
+
+  buttons.forEach(
+    function (button) {
+
+      button.disabled =
+        true;
+
+    }
+  );
+
+
+  /*
+   * CORRECT
+   */
+
+  if (
+    selectedAnswer ===
+    correctAnswer
+  ) {
+
+    currentScore++;
+
+
+    if (selectedButton) {
+
+      selectedButton.classList.add(
+        "correct"
+      );
+
+    }
+
+
+    const praise =
+      getPositiveFeedback();
+
+
+    showFeedback(
+      praise
+    );
+
+
+    speak(
+      praise
+    );
+
+
+  }
+
+  /*
+   * WRONG
+   */
+
+  else {
+
+    if (selectedButton) {
+
+      selectedButton.classList.add(
+        "wrong"
+      );
+
+    }
+
+
+    const encouragement =
+      getWrongFeedback();
+
+
+    showFeedback(
+      encouragement
+    );
+
+
+    speak(
+      encouragement
+    );
+
+  }
+
+
+  updateLevelUI();
+
+
+  /*
+   * Every question is only answered once.
+   *
+   * Correct or wrong,
+   * move to the next question.
+   */
+
+  setTimeout(
+    function () {
+
+      currentQuestionIndex++;
+
+      showQuestion();
+
+    },
+    1000
+  );
+
 }
 
-/* ---------------- GAME OVER ---------------- */
 
-function showGameOver() {
-  clearUI();
+/* =========================================================
+   FEEDBACK
+========================================================= */
 
-  const w = width();
-  const h = height();
+function showFeedback(
+  message
+) {
 
-  addUI(scene.add.rectangle(w / 2, h / 2, w, h, 0x1B4332, 0.86));
+  feedback.textContent =
+    message;
 
-  addUI(scene.add.text(w / 2, h * 0.16, "🎉 LEVEL COMPLETE! 🎉", {
-    fontSize: Math.min(w * 0.07, 58) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF",
-    stroke: "#FFB703",
-    strokeThickness: 6,
-    align: "center"
-  }).setOrigin(0.5));
-
-  addUI(scene.add.text(w / 2, h * 0.27, "You did an amazing job!", {
-    fontSize: Math.min(w * 0.042, 34) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF"
-  }).setOrigin(0.5));
-
-  const stars = score >= 90 ? "⭐⭐⭐" : score >= 60 ? "⭐⭐☆" : "⭐☆☆";
-
-  addUI(scene.add.text(w / 2, h * 0.42, stars, {
-    fontSize: Math.min(w * 0.12, 90) + "px"
-  }).setOrigin(0.5));
-
-  addUI(scene.add.text(w / 2, h * 0.55, `Final Score: ${score} / 100`, {
-    fontSize: Math.min(w * 0.047, 40) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF"
-  }).setOrigin(0.5));
-
-  const message =
-    score === 100 ? "Perfect! You're an Animal Expert! 🏆" :
-    score >= 80 ? "Amazing! Great Animal Knowledge! 🌟" :
-    score >= 60 ? "Good Job! Keep Learning! 😊" :
-    "Nice Try! Let's practice again! 💪";
-
-  addUI(scene.add.text(w / 2, h * 0.64, message, {
-    fontSize: Math.min(w * 0.033, 27) + "px",
-    fontStyle: "bold",
-    color: "#FFF9C4",
-    align: "center"
-  }).setOrigin(0.5));
-
-  const btn = addUI(scene.add.rectangle(
-    w / 2, h * 0.78,
-    Math.min(w * 0.48, 330),
-    70,
-    0xFFB703
-  ).setStrokeStyle(5, 0xFFFFFF).setInteractive({ useHandCursor: true }));
-
-  addUI(scene.add.text(w / 2, h * 0.78, "🔄 PLAY AGAIN", {
-    fontSize: Math.min(w * 0.038, 32) + "px",
-    fontStyle: "bold",
-    color: "#FFFFFF",
-    stroke: "#8B5E00",
-    strokeThickness: 3
-  }).setOrigin(0.5));
-
-  btn.on("pointerover", () => btn.setFillStyle(0xFFD166));
-  btn.on("pointerout", () => btn.setFillStyle(0xFFB703));
-  btn.on("pointerdown", () => {
-    initAudio();
-    startGame();
-  });
-
-  speak(`Game complete! Your score is ${score} out of 100.`);
 }
+
+
+/* =========================================================
+   POSITIVE FEEDBACK
+========================================================= */
+
+function getPositiveFeedback() {
+
+  const messages = [
+
+    "Good job!",
+
+    "Great!",
+
+    "Well done!",
+
+    "Excellent!",
+
+    "Amazing!"
+
+  ];
+
+
+  return messages[
+    Math.floor(
+      Math.random() *
+      messages.length
+    )
+  ];
+
+}
+
+
+/* =========================================================
+   WRONG FEEDBACK
+========================================================= */
+
+function getWrongFeedback() {
+
+  const messages = [
+
+    "Try again next time!",
+
+    "Keep learning!",
+
+    "Good try!",
+
+    "You can do it!",
+
+    "Keep going!"
+
+  ];
+
+
+  return messages[
+    Math.floor(
+      Math.random() *
+      messages.length
+    )
+  ];
+
+}
+
+
+/* =========================================================
+   TEXT TO SPEECH
+========================================================= */
+
+function speak(
+  text
+) {
+
+  if (audioMuted) {
+    return;
+  }
+
+
+  if (
+    !(
+      "speechSynthesis"
+      in window
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  window.speechSynthesis.cancel();
+
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      text
+    );
+
+
+  utterance.lang =
+    "en-US";
+
+  utterance.rate =
+    0.75;
+
+  utterance.pitch =
+    1.1;
+
+  utterance.volume =
+    1;
+
+
+  window.speechSynthesis.speak(
+    utterance
+  );
+
+}
+
+
+/* =========================================================
+   FINISH LEVEL
+========================================================= */
+
+function finishLevel() {
+
+  answerLocked =
+    true;
+
+
+  const percentage =
+    Math.round(
+      (
+        currentScore /
+        QUESTIONS_PER_LEVEL
+      ) * 100
+    );
+
+
+  showResultModal(
+    percentage
+  );
+
+}
+
+
+/* =========================================================
+   RESULT STARS
+========================================================= */
+
+function calculateStars(
+  percentage
+) {
+
+  if (percentage >= 90) {
+
+    return 3;
+
+  }
+
+
+  if (percentage >= 80) {
+
+    return 2;
+
+  }
+
+
+  return 1;
+
+}
+
+
+/* =========================================================
+   SHOW RESULT MODAL
+========================================================= */
+
+function showResultModal(
+  percentage
+) {
+
+  const stars =
+    calculateStars(
+      percentage
+    );
+
+
+  resultStars.textContent =
+    "⭐".repeat(stars);
+
+
+  const passed =
+    percentage >=
+    PASSING_SCORE;
+
+
+  if (passed) {
+
+    resultTitle.textContent =
+      "Awesome Job!";
+
+    resultMessage.textContent =
+      `You Passed Level ${currentLevel}!`;
+
+  } else {
+
+    resultTitle.textContent =
+      "Good Try!";
+
+    resultMessage.textContent =
+      `You need ${PASSING_SCORE}% to unlock the next level.`;
+
+  }
+
+
+  resultScore.textContent =
+    `Score: ${currentScore}/${QUESTIONS_PER_LEVEL} (${percentage}%)`;
+
+
+  createResultButtons(
+    passed
+  );
+
+
+  resultModal.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+/* =========================================================
+   CREATE RESULT BUTTONS
+========================================================= */
+
+function createResultButtons(
+  levelPassed
+) {
+
+  resultButtons.innerHTML =
+    "";
+
+
+  /*
+   * PREVIOUS LEVEL
+   */
+
+  if (
+    currentLevel > 1
+  ) {
+
+    const previousButton =
+      createResultButton(
+        "Previous Level",
+        "previous-level-button"
+      );
+
+
+    previousButton.addEventListener(
+      "click",
+      function () {
+
+        startLevel(
+          currentLevel - 1
+        );
+
+      }
+    );
+
+
+    resultButtons.appendChild(
+      previousButton
+    );
+
+  }
+
+
+  /*
+   * PLAY AGAIN
+   */
+
+  const playAgainButton =
+    createResultButton(
+      "Play Again",
+      "play-again-button"
+    );
+
+
+  playAgainButton.addEventListener(
+    "click",
+    function () {
+
+      startLevel(
+        currentLevel
+      );
+
+    }
+  );
+
+
+  resultButtons.appendChild(
+    playAgainButton
+  );
+
+
+  /*
+   * NEXT LEVEL
+   */
+
+  const nextButton =
+    createResultButton(
+      currentLevel === TOTAL_LEVELS
+        ? "Play From Level 1"
+        : "Next Level",
+      "next-level-button"
+    );
+
+
+  /*
+   * Player must score at least 80%.
+   */
+
+  if (!levelPassed) {
+
+    nextButton.disabled =
+      true;
+
+    nextButton.classList.add(
+      "disabled"
+    );
+
+  }
+
+
+  nextButton.addEventListener(
+    "click",
+    function () {
+
+      /*
+       * Safety check.
+       */
+
+      if (!levelPassed) {
+        return;
+      }
+
+
+      /*
+       * Level 10:
+       * return to Level 1.
+       */
+
+      if (
+        currentLevel ===
+        TOTAL_LEVELS
+      ) {
+
+        startLevel(1);
+
+      } else {
+
+        startLevel(
+          currentLevel + 1
+        );
+
+      }
+
+    }
+  );
+
+
+  resultButtons.appendChild(
+    nextButton
+  );
+
+}
+
+
+/* =========================================================
+   CREATE RESULT BUTTON
+========================================================= */
+
+function createResultButton(
+  text,
+  className
+) {
+
+  const button =
+    document.createElement(
+      "button"
+    );
+
+
+  button.type =
+    "button";
+
+  button.className =
+    `result-button ${className}`;
+
+  button.textContent =
+    text;
+
+
+  return button;
+
+}
+
+
+/* =========================================================
+   HIDE RESULT MODAL
+========================================================= */
+
+function hideResultModal() {
+
+  if (!resultModal) {
+    return;
+  }
+
+
+  resultModal.classList.add(
+    "hidden"
+  );
+
+}
+
+
+/* =========================================================
+   SOUND BUTTON
+========================================================= */
+
+function updateSoundButton() {
+
+  if (!soundButton) {
+    return;
+  }
+
+
+  if (audioMuted) {
+
+    soundButton.textContent =
+      "🔇";
+
+    soundButton.setAttribute(
+      "aria-label",
+      "Unmute audio"
+    );
+
+    soundButton.setAttribute(
+      "aria-pressed",
+      "true"
+    );
+
+  } else {
+
+    soundButton.textContent =
+      "🔊";
+
+    soundButton.setAttribute(
+      "aria-label",
+      "Mute audio"
+    );
+
+    soundButton.setAttribute(
+      "aria-pressed",
+      "false"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   TOGGLE AUDIO
+========================================================= */
+
+function toggleAudio() {
+
+  audioMuted =
+    !audioMuted;
+
+
+  updateSoundButton();
+
+
+  if (audioMuted) {
+
+    /*
+     * Stop speech.
+     */
+
+    if (
+      "speechSynthesis"
+      in window
+    ) {
+
+      window.speechSynthesis.cancel();
+
+    }
+
+
+    /*
+     * Stop background music.
+     */
+
+    if (backgroundMusic) {
+
+      backgroundMusic.pause();
+
+    }
+
+  } else {
+
+    /*
+     * Resume background music.
+     */
+
+    startBackgroundMusic();
+
+
+    /*
+     * Repeat current question.
+     */
+
+    speak(
+      "What animal is this?"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   BACKGROUND MUSIC
+========================================================= */
+
+function startBackgroundMusic() {
+
+  if (audioMuted) {
+    return;
+  }
+
+
+  if (!backgroundMusic) {
+    return;
+  }
+
+
+  /*
+   * Keep background music quiet
+   * so it does not cover speech.
+   */
+
+  backgroundMusic.volume =
+    0.25;
+
+
+  const playPromise =
+    backgroundMusic.play();
+
+
+  if (
+    playPromise !== undefined
+  ) {
+
+    playPromise.catch(
+      function () {
+
+        /*
+         * Browser may block autoplay.
+         * Music will start after user interaction.
+         */
+
+      }
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   EVENT LISTENERS
+========================================================= */
+
+function attachEventListeners() {
+
+  if (soundButton) {
+
+    soundButton.addEventListener(
+      "click",
+      function (event) {
+
+        event.stopPropagation();
+
+        toggleAudio();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * Browser autoplay protection.
+   *
+   * Start music after first interaction.
+   */
+
+  document.addEventListener(
+    "click",
+    function startMusicOnce() {
+
+      if (!audioMuted) {
+
+        startBackgroundMusic();
+
+      }
+
+
+      document.removeEventListener(
+        "click",
+        startMusicOnce
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   INITIALIZE GAME
+========================================================= */
+
+function initializeGame() {
+
+  initializeDOM();
+
+  updateSoundButton();
+
+  attachEventListeners();
+
+  startLevel(1);
+
+}
+
+
+/* =========================================================
+   START GAME
+========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  initializeGame
+);

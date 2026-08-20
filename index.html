@@ -1,7 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -9,57 +11,56 @@
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
   >
 
+  <meta
+    name="description"
+    content="Kids Learning World - Fun educational games for children"
+  >
+
   <title>Kids Learning World</title>
 
   <link rel="stylesheet" href="css/home.css">
+
 </head>
+
 
 <body>
 
   <main class="home-screen">
 
-    <!-- =========================================
+    <!-- =====================================
          SKY
-    ========================================== -->
+    ====================================== -->
 
     <div class="sky">
 
       <div class="sun"></div>
 
-      <div class="cloud cloud-1">
-        <span></span>
-      </div>
-
-      <div class="cloud cloud-2">
-        <span></span>
-      </div>
-
-      <div class="cloud cloud-3">
-        <span></span>
-      </div>
+      <div class="cloud cloud-one"></div>
+      <div class="cloud cloud-two"></div>
+      <div class="cloud cloud-three"></div>
 
     </div>
 
 
-    <!-- =========================================
+    <!-- =====================================
          HEADER
-    ========================================== -->
+    ====================================== -->
 
     <header class="game-header">
 
       <div class="logo">
 
-        <div class="logo-kids">
+        <span class="logo-kids">
           KIDS
-        </div>
+        </span>
 
-        <div class="logo-learning">
+        <span class="logo-learning">
           LEARNING
-        </div>
+        </span>
 
-        <div class="logo-world">
+        <span class="logo-world">
           WORLD
-        </div>
+        </span>
 
       </div>
 
@@ -70,9 +71,9 @@
     </header>
 
 
-    <!-- =========================================
+    <!-- =====================================
          TOP CONTROLS
-    ========================================== -->
+    ====================================== -->
 
     <div class="top-controls">
 
@@ -80,10 +81,12 @@
         id="soundButton"
         class="control-button"
         type="button"
-        aria-label="Sound"
+        aria-label="Toggle sound"
+        aria-pressed="false"
       >
-        <span class="control-icon">🔊</span>
+        <span id="soundIcon">🔊</span>
       </button>
+
 
       <button
         id="exitButton"
@@ -91,43 +94,35 @@
         type="button"
         aria-label="Exit"
       >
-        <span class="control-icon">🚪</span>
+        <span>🚪</span>
       </button>
 
     </div>
 
 
-    <!-- =========================================
+    <!-- =====================================
          MAIN WORLD
-    ========================================== -->
+    ====================================== -->
 
     <section class="world">
 
-
-      <!-- =====================================
-           DISTANT HILLS
-      ====================================== -->
+      <!-- BACKGROUND HILLS -->
 
       <div class="hill hill-back"></div>
-
       <div class="hill hill-middle"></div>
-
       <div class="hill hill-front"></div>
 
 
-      <!-- =====================================
+      <!-- ===================================
            TREES
-      ====================================== -->
+      ==================================== -->
 
       <div class="tree tree-left">
 
         <div class="tree-crown">
-
-          <div class="leaf leaf-1"></div>
-          <div class="leaf leaf-2"></div>
-          <div class="leaf leaf-3"></div>
-          <div class="leaf leaf-4"></div>
-
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
 
         <div class="tree-trunk"></div>
@@ -138,12 +133,9 @@
       <div class="tree tree-right">
 
         <div class="tree-crown">
-
-          <div class="leaf leaf-1"></div>
-          <div class="leaf leaf-2"></div>
-          <div class="leaf leaf-3"></div>
-          <div class="leaf leaf-4"></div>
-
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
 
         <div class="tree-trunk"></div>
@@ -151,131 +143,199 @@
       </div>
 
 
-      <!-- =====================================
-           LEFT ANIMAL
-      ====================================== -->
+      <!-- ===================================
+           CHARACTERS
+      ==================================== -->
 
       <div class="world-animal animal-lion">
 
-        <div class="animal-body">
-
-          <div class="lion-face">
-
-            <div class="lion-ear ear-left"></div>
-            <div class="lion-ear ear-right"></div>
-
-            <div class="lion-eye eye-left"></div>
-            <div class="lion-eye eye-right"></div>
-
-            <div class="lion-nose"></div>
-
-            <div class="lion-mouth"></div>
-
-          </div>
-
-        </div>
+        <img
+          src="assets/ui/animals/lion.png"
+          alt="Friendly lion"
+        >
 
       </div>
 
 
-      <!-- =====================================
-           RIGHT ANIMAL
-      ====================================== -->
+      <div class="world-animal animal-elephant">
 
-<div class="world-animal animal-elephant">
+        <img
+          src="assets/ui/animals/elephant.png"
+          class="elephant-image"
+          alt="Friendly elephant"
+        >
 
-  <img
-    src="assets/ui/animals/elephant.png"
-    class="elephant-image"
-    alt="Elephant"
-  >
+      </div>
+
+
+     <!-- =========================================
+     MAIN MENU
+========================================= -->
+
+<div class="main-menu">
+
+  <div class="welcome-text">
+    LET'S EXPLORE!
+  </div>
+
+  <div class="game-grid">
+
+    <!-- =========================
+         ANIMAL ADVENTURE
+    ========================== -->
+
+    <button
+      id="animalAdventureButton"
+      class="game-card game-card-animal"
+      type="button"
+      aria-label="Animal Adventure"
+    >
+    
+
+      <div class="game-card-icon">
+        🦁
+      </div>
+
+      <div class="game-card-content">
+
+        <div class="game-card-title">
+          ANIMAL
+        </div>
+
+        <div class="game-card-subtitle">
+          ADVENTURE
+        </div>
+
+      </div>
+
+      <div class="game-card-arrow">
+        ▶
+      </div>
+
+    </button>
+
+
+    <!-- =========================
+         ABC ADVENTURE
+    ========================== -->
+
+    <button
+  class="game-card abc-card"
+  type="button"
+  disabled
+>
+  <div class="game-lock">🔒</div>
+
+  <div class="card-icon">
+    🔤
+  </div>
+
+  <div class="card-text">
+    <span class="card-title">ABC</span>
+    <span class="card-subtitle">ADVENTURE</span>
+  </div>
+</button>
+
+
+    <!-- =========================
+         NUMBER ADVENTURE
+    ========================== -->
+
+    <button
+  class="game-card number-card"
+  type="button"
+  disabled
+>
+  <div class="game-lock">🔒</div>
+
+  <div class="card-icon">
+    🔢
+  </div>
+
+  <div class="card-text">
+    <span class="card-title">NUMBER</span>
+    <span class="card-subtitle">ADVENTURE</span>
+  </div>
+</button>
+
+
+    <!-- =========================
+         COLOR ADVENTURE
+    ========================== -->
+
+    <button
+  class="game-card color-card"
+  type="button"
+  disabled
+>
+  <div class="game-lock">🔒</div>
+
+  <div class="card-icon">
+    🎨
+  </div>
+
+  <div class="card-text">
+    <span class="card-title">COLOR</span>
+    <span class="card-subtitle">ADVENTURE</span>
+  </div>
+</button>
 
 </div>
 
 
-      <!-- =====================================
-           MAIN MENU
-      ====================================== -->
-
-      <div class="main-menu">
-
-        <div class="welcome-text">
-          LET'S EXPLORE!
-        </div>
-
-        <button
-          id="animalAdventureButton"
-          class="adventure-button"
-          type="button"
-          aria-label="Animal Adventure"
-        >
-
-          <span class="adventure-icon">
-            🦁
-          </span>
-
-          <span class="adventure-content">
-
-            <span class="adventure-title">
-              ANIMAL
-            </span>
-
-            <span class="adventure-subtitle">
-              ADVENTURE
-            </span>
-
-          </span>
-
-          <span class="adventure-arrow">
-            ▶
-          </span>
-
-        </button>
-
-      </div>
-
-
-      <!-- =====================================
+      <!-- ===================================
            FLOWERS
-      ====================================== -->
+      ==================================== -->
 
-      <div class="flower flower-1">🌼</div>
-      <div class="flower flower-2">🌸</div>
-      <div class="flower flower-3">🌻</div>
-      <div class="flower flower-4">🌸</div>
-      <div class="flower flower-5">🌼</div>
+      <div class="flower flower-one">🌼</div>
+      <div class="flower flower-two">🌸</div>
+      <div class="flower flower-three">🌻</div>
+      <div class="flower flower-four">🌸</div>
+      <div class="flower flower-five">🌼</div>
 
 
-      <!-- =====================================
+      <!-- ===================================
+           GRASS
+      ==================================== -->
+
+      <div class="grass grass-one"></div>
+      <div class="grass grass-two"></div>
+      <div class="grass grass-three"></div>
+      <div class="grass grass-four"></div>
+
+
+      <!-- ===================================
            GROUND
-      ====================================== -->
+      ==================================== -->
 
-      <div class="ground">
-
-        <div class="grass grass-1"></div>
-        <div class="grass grass-2"></div>
-        <div class="grass grass-3"></div>
-        <div class="grass grass-4"></div>
-        <div class="grass grass-5"></div>
-
-      </div>
+      <div class="ground"></div>
 
     </section>
 
 
-    <!-- =========================================
+    <!-- =====================================
          FOOTER
-    ========================================== -->
+    ====================================== -->
 
     <footer class="game-footer">
 
-      <span>
-        🌎 A fun world for curious kids
-      </span>
+      🌎 A fun world for curious kids
 
     </footer>
 
   </main>
+
+
+  <!-- =====================================
+       BACKGROUND MUSIC
+  ====================================== -->
+
+  <audio
+    id="backgroundMusic"
+    src="assets/audio/background-music.mp3"
+    loop
+    preload="auto"
+  ></audio>
 
 
   <script src="js/home.js"></script>

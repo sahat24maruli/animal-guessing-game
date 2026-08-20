@@ -7,20 +7,183 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
 
   <title>Animal Adventure</title>
 
-  <link rel="stylesheet" href="css/style.css">
+  <link
+    rel="stylesheet"
+    href="css/style.css"
+  >
 
 </head>
 
+
 <body>
 
-  <div id="game-container"></div>
+  <main class="game-screen">
 
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+    <!-- =========================================
+         SOUND BUTTON
+    ========================================== -->
+
+    <button
+      id="soundButton"
+      class="sound-button"
+      type="button"
+      aria-label="Mute audio"
+      aria-pressed="false"
+    >
+      🔊
+    </button>§§§
+
+
+    <!-- =========================================
+         TOP BAR
+    ========================================== -->
+
+    <header class="game-header">
+
+      <div
+        id="levelIndicator"
+        class="level-indicator"
+      >
+        Level 1
+      </div>
+
+
+      <div
+        id="questionIndicator"
+        class="question-indicator"
+      >
+        Question 1/10
+      </div>
+
+
+      <div
+        id="scoreIndicator"
+        class="score-indicator"
+      >
+        Score: 0
+      </div>
+
+    </header>
+
+
+    <!-- =========================================
+         GAME CONTENT
+    ========================================== -->
+
+    <section class="game-content">
+
+      <h1 class="game-title">
+        What Animal Is This?
+      </h1>
+
+
+      <!-- Animal Image -->
+
+      <div class="animal-container">
+
+        <img
+          id="animalImage"
+          class="animal-image"
+          src=""
+          alt="Animal"
+        >
+
+      </div>
+
+
+      <!-- Question -->
+
+      <p
+        id="questionText"
+        class="question-text"
+      >
+        Listen carefully!
+      </p>
+
+
+      <!-- Answer Buttons -->
+
+      <div
+        id="answerContainer"
+        class="answer-container"
+      >
+
+      </div>
+
+
+      <!-- Feedback -->
+
+      <div
+        id="feedback"
+        class="feedback"
+        aria-live="polite"
+      ></div>
+
+    </section>
+
+
+    <!-- =========================================
+         LEVEL RESULT MODAL
+    ========================================== -->
+
+    <div
+      id="resultModal"
+      class="result-overlay hidden"
+    >
+
+      <div
+        class="result-modal"
+      >
+
+        <div
+          id="resultStars"
+          class="result-stars"
+        >
+          ⭐⭐⭐
+        </div>
+
+
+        <h2
+          id="resultTitle"
+          class="result-title"
+        >
+          Awesome Job!
+        </h2>
+
+
+        <p
+          id="resultMessage"
+          class="result-message"
+        >
+          You Passed Level 1!
+        </p>
+
+
+        <div
+          id="resultScore"
+          class="result-score"
+        >
+          Score: 100%
+        </div>
+
+
+        <div
+          id="resultButtons"
+          class="result-buttons"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+  </main>
+
 
   <script src="js/game.js"></script>
 
